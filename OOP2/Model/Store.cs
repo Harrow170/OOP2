@@ -7,33 +7,32 @@ using System.Threading.Tasks;
 namespace OOP2.Model
 {
     /// <summary>
-    /// Представляет собой контекст приложения.
+    /// Holds data about items and customers.
     /// </summary>
-    public class Store
+    internal class Store
     {
         /// <summary>
-        /// Список товаров.
+        /// List of items.
         /// </summary>
-        List<Item> _items;
-        /// <summary>
-        /// Список клиентов.
-        /// </summary>
-        List<Customer> _customer;
+        private List<Item> _items = new List<Item>();
 
         /// <summary>
-        /// Получает или задает список товаров.
+        /// List of customers.
         /// </summary>
-        /// <value>Список объектов <see cref="Item"/>, представляющий товары.</value>
+        private List<Customer> _customers = new List<Customer>();
+
+        /// <summary>
+        /// Gets and setd a list of items and items.
+        /// </summary>
         public List<Item> Items { get { return _items; } set { _items = value; } }
-        /// <summary>
-        /// Получает или задает список клиентов.
-        /// </summary>
-        /// <value>Список объектов <see cref="Customer"/>, представляющий клиентов.</value>
-        public List<Customer> Customers { get { return _customer; } set { _customer = value; } }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Store"/>.
-        /// Конструктор создает пустые списки для товаров и клиентов.
+        /// Returns and sets a list if customers. 
+        /// </summary>
+        public List<Customer> Customers { get { return _customers; } set { _customers = value; } }
+
+        /// <summary>
+        /// Creates a sample of the class <see cref="Store"/>.
         /// </summary>
         public Store()
         {

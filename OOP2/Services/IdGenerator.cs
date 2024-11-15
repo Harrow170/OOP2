@@ -7,38 +7,22 @@ using System.Threading.Tasks;
 namespace OOP2.Services
 {
     /// <summary>
-    /// Класс для генерации уникальных идентификаторов.
+    /// Implements statistical generation of the next number for an object.
     /// </summary>
-    internal static class IdGenerator
+    internal class IdGenerator
     {
         /// <summary>
-        /// Поле, содержащее текущее значение идентификатора.
+        /// Counter for all existing object.
         /// </summary>
-        static int _id;
+        private static int _nextId;
 
         /// <summary>
-        /// Свойство для получения и установки текущего значения идентификатора.
+        /// Generates next number.
         /// </summary>
-        static int Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
-
-        /// <summary>
-        /// Возвращает следующий уникальный идентификатор.
-        /// Увеличивает значение текущего идентификатора на 1.
-        /// </summary>
-        /// <returns>Следующий идентификатор.</returns>
+        /// <returns>Returns next number for an object.</returns>
         public static int GetNextId()
         {
-            return Id++;
+            return _nextId++;
         }
     }
 }

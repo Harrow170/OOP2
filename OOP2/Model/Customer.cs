@@ -8,61 +8,57 @@ using OOP2.Services;
 
 namespace OOP2.Model
 {
+
     /// <summary>
-    /// Класс Customer представляет данные клиента.
+    /// Holds data of a customer.
     /// </summary>
     public class Customer
     {
         /// <summary>
-        /// Идентификатор клиента.
+        /// Unique customer number.
         /// </summary>
-        readonly int _id;
-        /// <summary>
-        /// Полное имя клиента.
-        /// </summary>
-        string _fullname;
-        /// <summary>
-        /// Адрес клиента.
-        /// </summary>
-        Address _address;
-        /// <summary>
-        /// Корзина товаров.
-        /// </summary>
-        Cart _cart;
-        /// <summary>
-        /// Список заказов.
-        /// </summary>
-        List<Order> _orders;
+        private readonly int _id;
 
         /// <summary>
-        /// Получает идентификатор клиента.
+        /// Full name of a customer.
         /// </summary>
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
+        private string _fullname = string.Empty;
+
         /// <summary>
-        /// Возвращает или меняет полное имя клиента.
+        /// Delivery address.
         /// </summary>
-        public string Fullname
-        {
-            get
-            {
-                return _fullname;
-            }
-            set
-            {
-                ValueValidator.AssertStringOnLength(value, 200, nameof(Fullname));
-                _fullname = value;
-            }
-        }
+        private Address _address = new Address();
+
+
         /// <summary>
-        /// Возвращает или меняет адрес клиента.
+        /// New variable of a Cart type.                                 
         /// </summary>
-        public Address Address
+        private Cart _cart = new Cart();
+
+        /// <summary>
+        /// A list of orders.                                            
+        /// </summary>
+        private List<Order> _orders = new List<Order>();
+
+
+        /// <summary> 
+        /// Gets and sets cart data.                                      
+        /// </summary>
+        public Cart CustomerCart
+        {
+            get { return _cart; }
+            set { _cart = value; }
+        }
+
+        /// <summary>
+        /// Returns unique id of a customer.
+        /// </summary>
+        public int Id { get { return _id; } }
+
+        /// <summary>
+        /// Gets and sets an address for delivery.
+        /// </summary>
+        public Address CustomerAddress
         {
             get
             {
@@ -73,58 +69,58 @@ namespace OOP2.Model
                 _address = value;
             }
         }
+
         /// <summary>
-        /// Возвращает или меняет содержимое корзины товаров.
+        /// Gets and sets the full name of a customer.
         /// </summary>
-        public Cart Cart
+        public string Fullname
         {
-            get
-            {
-                return _cart;
-            }
+            get { return _fullname; }
             set
             {
-                _cart = value;
+                ValueValidator.AssertStringOnLength(value, 200, nameof(_fullname));
+                _fullname = value;
             }
         }
+
         /// <summary>
-        /// Возвращает или меняет список заказов.
+        /// Gets and sets the list of orders.
         /// </summary>
         public List<Order> Orders
         {
-            get { return _orders; }
-            set { _orders = value; }
+            get
+            {
+                return _orders;
+            }
+            set
+            {
+                _orders = value;
+            }
         }
 
         /// <summary>
-        /// Конструктор класса Customer.
+        /// Creates a sample of a class  <see cref="Item"/>.
+        /// </summary>
+        /// <param name="fullname">Full name of a customer.</param>
+
+        public Customer(string fullname)
+        {
+            Fullname = fullname;
+            CustomerAddress = new Address();
+            _id = IdGenerator.GetNextId();
+            CustomerCart = new Cart();
+        }
+
+        /// <summary>
+        /// Creates an empty sample of a class <see cref="Item"/>.
         /// </summary>
         public Customer()
         {
+            Fullname = string.Empty;
+            CustomerAddress = new Address();
             _id = IdGenerator.GetNextId();
-            Fullname = Id.ToString();
-            Address = new Address();
-            Cart = new Cart();
+            CustomerCart = new Cart();
             Orders = new List<Order>();
-        }
-
-        /// <summary>
-        /// Конструктор класса Customer.
-        /// </summary>
-        /// <param name="fullname">Полное имя клиента.</param>
-        /// <param name="address">Адрес клиента.</param>
-        public Customer(string fullname, Address address)
-        {
-            Fullname = fullname;
-            Address = address;
-            _id = IdGenerator.GetNextId();
-            Cart = new Cart();
-            Orders = new List<Order>();
-        }
-
-        public override string ToString()
-        {
-            return Fullname;
         }
     }
 }

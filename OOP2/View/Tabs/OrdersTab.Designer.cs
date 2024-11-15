@@ -31,285 +31,260 @@ namespace OOP2.View.Tabs
         private void InitializeComponent()
         {
             Model.Address address1 = new Model.Address();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            SelectedItemPanel = new Panel();
+            SelectedOrderGroupBox = new GroupBox();
+            StatusComboBox = new ComboBox();
+            CreatedTextBox = new TextBox();
+            IdTextBox = new TextBox();
+            StatusLabel = new Label();
+            CreatedLabel = new Label();
+            IdLabel = new Label();
+            OrderItemsLabel = new Label();
             OrderItemsListBox = new ListBox();
             AmountLabel = new Label();
-            TextAmountLabel = new Label();
-            AddressControl = new Controls.AddressControl();
-            StatusComboBox = new ComboBox();
-            StatusLabel = new Label();
-            SelectedOrderLabel = new Label();
-            ChangedAtTextBox = new TextBox();
-            IdTextBox = new TextBox();
-            OrderItemsLabel = new Label();
-            ChangedAtLabel = new Label();
-            IdLabel = new Label();
-            OrdersLabel = new Label();
+            TotalCostLabel = new Label();
             OrdersDataGridView = new DataGridView();
-            FindLabel = new Label();
-            FindTextBox = new TextBox();
-            tableLayoutPanel1.SuspendLayout();
-            SelectedItemPanel.SuspendLayout();
+            IdColumn = new DataGridViewTextBoxColumn();
+            CreatedColumn = new DataGridViewTextBoxColumn();
+            OrderStatusColumn = new DataGridViewTextBoxColumn();
+            CustomerFullNameColumn = new DataGridViewTextBoxColumn();
+            AddressControl = new Controls.AddressControl();
+            DataGridGroupBox = new GroupBox();
+            OrderItemsGroupBox = new GroupBox();
+            SelectedOrderGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)OrdersDataGridView).BeginInit();
+            DataGridGroupBox.SuspendLayout();
+            OrderItemsGroupBox.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // SelectedOrderGroupBox
             // 
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 68F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(SelectedItemPanel, 2, 0);
-            tableLayoutPanel1.Controls.Add(OrdersLabel, 0, 0);
-            tableLayoutPanel1.Controls.Add(OrdersDataGridView, 0, 1);
-            tableLayoutPanel1.Controls.Add(FindLabel, 0, 2);
-            tableLayoutPanel1.Controls.Add(FindTextBox, 1, 2);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.MinimumSize = new Size(0, 565);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 31F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(979, 565);
-            tableLayoutPanel1.TabIndex = 0;
+            SelectedOrderGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            SelectedOrderGroupBox.Controls.Add(StatusComboBox);
+            SelectedOrderGroupBox.Controls.Add(CreatedTextBox);
+            SelectedOrderGroupBox.Controls.Add(IdTextBox);
+            SelectedOrderGroupBox.Controls.Add(StatusLabel);
+            SelectedOrderGroupBox.Controls.Add(CreatedLabel);
+            SelectedOrderGroupBox.Controls.Add(IdLabel);
+            SelectedOrderGroupBox.Location = new Point(326, 3);
+            SelectedOrderGroupBox.Name = "SelectedOrderGroupBox";
+            SelectedOrderGroupBox.Size = new Size(464, 128);
+            SelectedOrderGroupBox.TabIndex = 0;
+            SelectedOrderGroupBox.TabStop = false;
+            SelectedOrderGroupBox.Text = "Selected Order";
             // 
-            // SelectedItemPanel
+            // StatusComboBox
             // 
-            SelectedItemPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            SelectedItemPanel.BackColor = SystemColors.ControlLightLight;
-            SelectedItemPanel.Controls.Add(OrderItemsListBox);
-            SelectedItemPanel.Controls.Add(AmountLabel);
-            SelectedItemPanel.Controls.Add(TextAmountLabel);
-            SelectedItemPanel.Controls.Add(AddressControl);
-            SelectedItemPanel.Controls.Add(StatusComboBox);
-            SelectedItemPanel.Controls.Add(StatusLabel);
-            SelectedItemPanel.Controls.Add(SelectedOrderLabel);
-            SelectedItemPanel.Controls.Add(ChangedAtTextBox);
-            SelectedItemPanel.Controls.Add(IdTextBox);
-            SelectedItemPanel.Controls.Add(OrderItemsLabel);
-            SelectedItemPanel.Controls.Add(ChangedAtLabel);
-            SelectedItemPanel.Controls.Add(IdLabel);
-            SelectedItemPanel.Dock = DockStyle.Fill;
-            SelectedItemPanel.Location = new Point(526, 3);
-            SelectedItemPanel.Name = "SelectedItemPanel";
-            tableLayoutPanel1.SetRowSpan(SelectedItemPanel, 3);
-            SelectedItemPanel.Size = new Size(450, 559);
-            SelectedItemPanel.TabIndex = 4;
+            StatusComboBox.FormattingEnabled = true;
+            StatusComboBox.Location = new Point(65, 91);
+            StatusComboBox.Name = "StatusComboBox";
+            StatusComboBox.Size = new Size(121, 23);
+            StatusComboBox.TabIndex = 5;
+            StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
+            // 
+            // CreatedTextBox
+            // 
+            CreatedTextBox.Location = new Point(65, 56);
+            CreatedTextBox.Name = "CreatedTextBox";
+            CreatedTextBox.Size = new Size(121, 23);
+            CreatedTextBox.TabIndex = 4;
+            // 
+            // IdTextBox
+            // 
+            IdTextBox.Location = new Point(65, 22);
+            IdTextBox.Name = "IdTextBox";
+            IdTextBox.Size = new Size(121, 23);
+            IdTextBox.TabIndex = 3;
+            // 
+            // StatusLabel
+            // 
+            StatusLabel.AutoSize = true;
+            StatusLabel.Location = new Point(6, 94);
+            StatusLabel.Name = "StatusLabel";
+            StatusLabel.Size = new Size(42, 15);
+            StatusLabel.TabIndex = 2;
+            StatusLabel.Text = "Status:";
+            // 
+            // CreatedLabel
+            // 
+            CreatedLabel.AutoSize = true;
+            CreatedLabel.Location = new Point(6, 59);
+            CreatedLabel.Name = "CreatedLabel";
+            CreatedLabel.Size = new Size(51, 15);
+            CreatedLabel.TabIndex = 1;
+            CreatedLabel.Text = "Created:";
+            // 
+            // IdLabel
+            // 
+            IdLabel.AutoSize = true;
+            IdLabel.Location = new Point(6, 25);
+            IdLabel.Name = "IdLabel";
+            IdLabel.Size = new Size(21, 15);
+            IdLabel.TabIndex = 0;
+            IdLabel.Text = "ID:";
+            // 
+            // OrderItemsLabel
+            // 
+            OrderItemsLabel.AutoSize = true;
+            OrderItemsLabel.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            OrderItemsLabel.Location = new Point(326, 339);
+            OrderItemsLabel.Name = "OrderItemsLabel";
+            OrderItemsLabel.Size = new Size(77, 15);
+            OrderItemsLabel.TabIndex = 2;
+            OrderItemsLabel.Text = "Order Items";
             // 
             // OrderItemsListBox
             // 
             OrderItemsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            OrderItemsListBox.BackColor = SystemColors.Control;
             OrderItemsListBox.FormattingEnabled = true;
-            OrderItemsListBox.Location = new Point(11, 353);
-            OrderItemsListBox.MinimumSize = new Size(0, 150);
+            OrderItemsListBox.ItemHeight = 15;
+            OrderItemsListBox.Location = new Point(0, 22);
             OrderItemsListBox.Name = "OrderItemsListBox";
-            OrderItemsListBox.Size = new Size(436, 144);
-            OrderItemsListBox.TabIndex = 19;
+            OrderItemsListBox.Size = new Size(462, 124);
+            OrderItemsListBox.TabIndex = 3;
             // 
             // AmountLabel
             // 
-            AmountLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AmountLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            AmountLabel.Location = new Point(58, 527);
+            AmountLabel.AutoSize = true;
+            AmountLabel.Dock = DockStyle.Bottom;
+            AmountLabel.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            AmountLabel.Location = new Point(3, 221);
             AmountLabel.Name = "AmountLabel";
-            AmountLabel.Size = new Size(389, 32);
-            AmountLabel.TabIndex = 18;
-            AmountLabel.Text = "0";
-            AmountLabel.TextAlign = ContentAlignment.MiddleRight;
+            AmountLabel.Size = new Size(60, 15);
+            AmountLabel.TabIndex = 4;
+            AmountLabel.Text = "Amount:";
             // 
-            // TextAmountLabel
+            // TotalCostLabel
             // 
-            TextAmountLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            TextAmountLabel.AutoSize = true;
-            TextAmountLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            TextAmountLabel.Location = new Point(376, 507);
-            TextAmountLabel.Name = "TextAmountLabel";
-            TextAmountLabel.Size = new Size(71, 20);
-            TextAmountLabel.TabIndex = 17;
-            TextAmountLabel.Text = "Amount:";
+            TotalCostLabel.AutoSize = true;
+            TotalCostLabel.Dock = DockStyle.Bottom;
+            TotalCostLabel.Font = new Font("Segoe UI Black", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            TotalCostLabel.Location = new Point(3, 196);
+            TotalCostLabel.Name = "TotalCostLabel";
+            TotalCostLabel.Size = new Size(45, 25);
+            TotalCostLabel.TabIndex = 5;
+            TotalCostLabel.Text = "555";
+            // 
+            // OrdersDataGridView
+            // 
+            OrdersDataGridView.AllowUserToAddRows = false;
+            OrdersDataGridView.AllowUserToDeleteRows = false;
+            OrdersDataGridView.AllowUserToResizeColumns = false;
+            OrdersDataGridView.AllowUserToResizeRows = false;
+            OrdersDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            OrdersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            OrdersDataGridView.Columns.AddRange(new DataGridViewColumn[] { IdColumn, CreatedColumn, OrderStatusColumn, CustomerFullNameColumn });
+            OrdersDataGridView.Location = new Point(11, 12);
+            OrdersDataGridView.MinimumSize = new Size(306, 456);
+            OrdersDataGridView.MultiSelect = false;
+            OrdersDataGridView.Name = "OrdersDataGridView";
+            OrdersDataGridView.RightToLeft = RightToLeft.No;
+            OrdersDataGridView.RowHeadersWidth = 30;
+            OrdersDataGridView.Size = new Size(306, 561);
+            OrdersDataGridView.TabIndex = 6;
+            OrdersDataGridView.SelectionChanged += OrdersDataGridView_SelectionChanged;
+            // 
+            // IdColumn
+            // 
+            IdColumn.HeaderText = "Id";
+            IdColumn.Name = "IdColumn";
+            // 
+            // CreatedColumn
+            // 
+            CreatedColumn.HeaderText = "Created";
+            CreatedColumn.Name = "CreatedColumn";
+            // 
+            // OrderStatusColumn
+            // 
+            OrderStatusColumn.HeaderText = "Order Status";
+            OrderStatusColumn.Name = "OrderStatusColumn";
+            // 
+            // CustomerFullNameColumn
+            // 
+            CustomerFullNameColumn.HeaderText = "Customer FullName";
+            CustomerFullNameColumn.Name = "CustomerFullNameColumn";
             // 
             // AddressControl
             // 
+            AddressControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            AddressControl.Location = new Point(326, 145);
+            AddressControl.Margin = new Padding(3, 2, 3, 2);
+            AddressControl.Name = "AddressControl";
             address1.Apartment = "";
             address1.Building = "";
             address1.City = "";
             address1.Country = "";
             address1.Index = 100000;
             address1.Street = "";
-            AddressControl.Address = address1;
-            AddressControl.Enabled = false;
-            AddressControl.Location = new Point(0, 148);
-            AddressControl.Name = "AddressControl";
-            AddressControl.Size = new Size(477, 179);
-            AddressControl.TabIndex = 16;
+            AddressControl.OurAddress = address1;
+            AddressControl.Size = new Size(464, 181);
+            AddressControl.TabIndex = 7;
             // 
-            // StatusComboBox
+            // DataGridGroupBox
             // 
-            StatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            StatusComboBox.FormattingEnabled = true;
-            StatusComboBox.Location = new Point(93, 114);
-            StatusComboBox.Name = "StatusComboBox";
-            StatusComboBox.Size = new Size(151, 28);
-            StatusComboBox.TabIndex = 14;
-            StatusComboBox.SelectedIndexChanged += StatusComboBox_SelectedIndexChanged;
+            DataGridGroupBox.Controls.Add(OrdersDataGridView);
+            DataGridGroupBox.Dock = DockStyle.Left;
+            DataGridGroupBox.Location = new Point(0, 0);
+            DataGridGroupBox.Name = "DataGridGroupBox";
+            DataGridGroupBox.Size = new Size(320, 596);
+            DataGridGroupBox.TabIndex = 8;
+            DataGridGroupBox.TabStop = false;
             // 
-            // StatusLabel
+            // OrderItemsGroupBox
             // 
-            StatusLabel.AutoSize = true;
-            StatusLabel.Location = new Point(13, 117);
-            StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(52, 20);
-            StatusLabel.TabIndex = 2;
-            StatusLabel.Text = "Status:";
-            // 
-            // SelectedOrderLabel
-            // 
-            SelectedOrderLabel.AutoSize = true;
-            SelectedOrderLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            SelectedOrderLabel.Location = new Point(13, 8);
-            SelectedOrderLabel.Name = "SelectedOrderLabel";
-            SelectedOrderLabel.Size = new Size(111, 20);
-            SelectedOrderLabel.TabIndex = 1;
-            SelectedOrderLabel.Text = "Selected Order";
-            // 
-            // ChangedAtTextBox
-            // 
-            ChangedAtTextBox.BackColor = SystemColors.Control;
-            ChangedAtTextBox.Location = new Point(93, 81);
-            ChangedAtTextBox.Name = "ChangedAtTextBox";
-            ChangedAtTextBox.Size = new Size(151, 27);
-            ChangedAtTextBox.TabIndex = 11;
-            ChangedAtTextBox.KeyPress += DisableTextBox;
-            // 
-            // IdTextBox
-            // 
-            IdTextBox.Location = new Point(93, 48);
-            IdTextBox.Name = "IdTextBox";
-            IdTextBox.ReadOnly = true;
-            IdTextBox.Size = new Size(151, 27);
-            IdTextBox.TabIndex = 10;
-            IdTextBox.KeyPress += DisableTextBox;
-            // 
-            // OrderItemsLabel
-            // 
-            OrderItemsLabel.AutoSize = true;
-            OrderItemsLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            OrderItemsLabel.Location = new Point(13, 330);
-            OrderItemsLabel.Name = "OrderItemsLabel";
-            OrderItemsLabel.Size = new Size(97, 20);
-            OrderItemsLabel.TabIndex = 8;
-            OrderItemsLabel.Text = "Order Items:";
-            // 
-            // ChangedAtLabel
-            // 
-            ChangedAtLabel.AutoSize = true;
-            ChangedAtLabel.Location = new Point(11, 84);
-            ChangedAtLabel.Name = "ChangedAtLabel";
-            ChangedAtLabel.Size = new Size(71, 20);
-            ChangedAtLabel.TabIndex = 7;
-            ChangedAtLabel.Text = "Changed:";
-            // 
-            // IdLabel
-            // 
-            IdLabel.AutoSize = true;
-            IdLabel.Location = new Point(11, 51);
-            IdLabel.Name = "IdLabel";
-            IdLabel.Size = new Size(27, 20);
-            IdLabel.TabIndex = 6;
-            IdLabel.Text = "ID:";
-            // 
-            // OrdersLabel
-            // 
-            OrdersLabel.AutoSize = true;
-            OrdersLabel.Dock = DockStyle.Bottom;
-            OrdersLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            OrdersLabel.Location = new Point(3, 11);
-            OrdersLabel.Name = "OrdersLabel";
-            OrdersLabel.Size = new Size(62, 20);
-            OrdersLabel.TabIndex = 1;
-            OrdersLabel.Text = "Orders";
-            // 
-            // OrdersDataGridView
-            // 
-            OrdersDataGridView.AllowUserToAddRows = false;
-            OrdersDataGridView.AllowUserToDeleteRows = false;
-            OrdersDataGridView.AllowUserToOrderColumns = true;
-            OrdersDataGridView.AllowUserToResizeColumns = false;
-            OrdersDataGridView.AllowUserToResizeRows = false;
-            OrdersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(OrdersDataGridView, 2);
-            OrdersDataGridView.Dock = DockStyle.Fill;
-            OrdersDataGridView.Location = new Point(3, 34);
-            OrdersDataGridView.MultiSelect = false;
-            OrdersDataGridView.Name = "OrdersDataGridView";
-            OrdersDataGridView.ReadOnly = true;
-            OrdersDataGridView.RowHeadersVisible = false;
-            OrdersDataGridView.RowHeadersWidth = 51;
-            OrdersDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            OrdersDataGridView.Size = new Size(517, 498);
-            OrdersDataGridView.TabIndex = 2;
-            OrdersDataGridView.CellContentClick += OrdersDataGridView_CellContentClick;
-            OrdersDataGridView.KeyPress += DisableTextBox;
-            // 
-            // FindLabel
-            // 
-            FindLabel.AutoSize = true;
-            FindLabel.Dock = DockStyle.Fill;
-            FindLabel.Location = new Point(3, 535);
-            FindLabel.Name = "FindLabel";
-            FindLabel.Size = new Size(62, 30);
-            FindLabel.TabIndex = 5;
-            FindLabel.Text = "Find:";
-            FindLabel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // FindTextBox
-            // 
-            FindTextBox.Dock = DockStyle.Fill;
-            FindTextBox.Location = new Point(71, 538);
-            FindTextBox.Name = "FindTextBox";
-            FindTextBox.Size = new Size(449, 27);
-            FindTextBox.TabIndex = 6;
-            FindTextBox.TextChanged += FindTextBox_TextChanged;
+            OrderItemsGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            OrderItemsGroupBox.Controls.Add(OrderItemsListBox);
+            OrderItemsGroupBox.Controls.Add(TotalCostLabel);
+            OrderItemsGroupBox.Controls.Add(AmountLabel);
+            OrderItemsGroupBox.Location = new Point(323, 339);
+            OrderItemsGroupBox.Name = "OrderItemsGroupBox";
+            OrderItemsGroupBox.Size = new Size(468, 239);
+            OrderItemsGroupBox.TabIndex = 9;
+            OrderItemsGroupBox.TabStop = false;
+            OrderItemsGroupBox.Text = "groupBox1";
             // 
             // OrdersTab
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(AddressControl);
+            Controls.Add(OrderItemsLabel);
+            Controls.Add(SelectedOrderGroupBox);
+            Controls.Add(DataGridGroupBox);
+            Controls.Add(OrderItemsGroupBox);
+            MinimumSize = new Size(806, 596);
             Name = "OrdersTab";
-            Size = new Size(979, 565);
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            SelectedItemPanel.ResumeLayout(false);
-            SelectedItemPanel.PerformLayout();
+            Size = new Size(806, 596);
+            SelectedOrderGroupBox.ResumeLayout(false);
+            SelectedOrderGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)OrdersDataGridView).EndInit();
+            DataGridGroupBox.ResumeLayout(false);
+            OrderItemsGroupBox.ResumeLayout(false);
+            OrderItemsGroupBox.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label OrdersLabel;
-        private DataGridView OrdersDataGridView;
-        private Panel SelectedItemPanel;
-        private ComboBox StatusComboBox;
+        private GroupBox SelectedOrderGroupBox;
+        private Label IdLabel;
         private Label StatusLabel;
-        private Label SelectedOrderLabel;
-        private TextBox ChangedAtTextBox;
+        private Label CreatedLabel;
+        private ComboBox StatusComboBox;
+        private TextBox CreatedTextBox;
         private TextBox IdTextBox;
         private Label OrderItemsLabel;
-        private Label ChangedAtLabel;
-        private Label IdLabel;
-        private Controls.AddressControl AddressControl;
-        private Label AmountLabel;
-        private Label TextAmountLabel;
         private ListBox OrderItemsListBox;
-        private Label FindLabel;
-        private TextBox FindTextBox;
+        private Label AmountLabel;
+        private Label TotalCostLabel;
+        private DataGridView OrdersDataGridView;
+        private DataGridViewTextBoxColumn IdColumn;
+        private DataGridViewTextBoxColumn CreatedColumn;
+        private DataGridViewTextBoxColumn OrderStatusColumn;
+        private DataGridViewTextBoxColumn CustomerFullNameColumn;
+        private Label label1;
+        private GroupBox OrderItemsGroupBox;
+        private Controls.AddressControl AddressControl;
+        private GroupBox DataGridGroupBox;
     }
 }

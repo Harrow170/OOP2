@@ -8,64 +8,39 @@ using System.Diagnostics;
 namespace OOP2.Services
 {
     /// <summary>
-    /// Валидация значений.
+    /// Implements statistical data validation.
     /// </summary>
-    internal static class ValueValidator
+    class ValueValidator
     {
         /// <summary>
-        /// Проверяет длину строки на допустимые пределы.
+        /// Checks that the number is not bigger than the border.
         /// </summary>
-        /// <param name="value">Проверяемая строка.</param>
-        /// <param name="maxLength">Максимальная допустимая длина строки.</param>
-        /// <param name="propertyName">Имя свойства, к которому относится данная строка.</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если длина строка выходит за допустимые пределы.</exception>
+        /// <param name="value">Subject that we check.</param>
+        /// <param name="max">Upper border.</param>
+        /// <param name="propertyName">Name of the subject.</param>
         public static void AssertStringOnLength(string value, int maxLength, string propertyName)
         {
-            if (value.Length < 0 || value.Length >= maxLength) throw new ArgumentException($"{propertyName} должен быть меньше {maxLength} символов.");
+            if (value.Length > maxLength)
+            {
+                throw new ArgumentOutOfRangeException($"{propertyName} is expected to be less than {maxLength}");
+            }
         }
 
-        /// <summary>
-        /// Проверка на положительное значение для целочисленного типа.
-        /// </summary>
-        /// <param name="value">Проверяемое значение.</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение отрицательное.</exception>
-        public static void AssertOnPositiveValue(int value, string propertyName)
-        {
-            if (value < 0) throw new ArgumentException($"{propertyName} должен быть положительным.");
-        }
 
         /// <summary>
-        /// Проверка на положительное значение для вещественного типа.
+        /// Checks if the number is in the gap.
         /// </summary>
-        /// <param name="value">Проверяемое значение.</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение отрицательное.</exception>
-        public static void AssertOnPositiveValue(double value, string propertyName)
+        /// <param name="value">Checks the number.</param>
+        /// <param name="min">Lower border.</param>
+        /// <param name="max">Upper border.</param>
+        /// <param name="propertyName">Name of the subject.</param>
+        public static void AssertStringOnLength(double value, int minLength, int maxLength, string propertyName)
         {
-            if (value < 0) throw new ArgumentException($"{propertyName} должен быть положительным.");
+            if (value < minLength || value > maxLength)
+            {
+                throw new ArgumentOutOfRangeException($"{propertyName} is expected to be less than {minLength} and bigger than {maxLength}");
+            }
         }
 
-        /// <summary>
-        /// Проверка значения на принадлежность заданному диапазону для целочисленного типа.
-        /// </summary>
-        /// <param name="value">Проверяемое значение.</param>
-        /// <param name="min">Минимальное значение в диапазоне (включительно).</param>
-        /// <param name="max">Максимальное значение в диапазоне (исключительно).</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение находится вне заданного диапазона.</exception>
-        public static void AssertValueInRange(int value, int min, int max, string propertyName)
-        {
-            if (value < min || value >= max) throw new ArgumentException($"{propertyName} должен быть больше {min}, но меньше {max}.");
-        }
-
-        /// <summary>
-        /// Проверка значения на принадлежность заданному диапазону для вещественного типа.
-        /// </summary>
-        /// <param name="value">Проверяемое значение.</param>
-        /// <param name="min">Минимальное значение в диапазоне (включительно).</param>
-        /// <param name="max">Максимальное значение в диапазоне (исключительно).</param>
-        /// <exception cref="ArgumentException">Выбрасывается, если значение находится вне заданного диапазона.</exception>
-        public static void AssertValueInRange(double value, double min, double max, string propertyName)
-        {
-            if (value < min || value >= max) throw new ArgumentException($"{propertyName} должен быть больше {min}, но меньше {max}.");
-        }
     }
 }

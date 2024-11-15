@@ -1,198 +1,167 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Linq;
-using System.Collections;
 using OOP2.Model;
 using OOP2.Services;
 using OOP2.View.Controls;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OOP2.View.Tabs
 {
     /// <summary>
-    /// Представляет вкладку управления заказами.
+    /// Orders tab.
     /// </summary>
     public partial class OrdersTab : UserControl
     {
-        OrderWithCustomerFullname? _currentOrder;
         /// <summary>
-        /// Список клиентов.
+        /// Gets and sets a list of customers.
         /// </summary>
-        List<Customer> _customers;
-        /// <summary>
-        /// Словарь для привязки заказа к клиенту.
-        /// </summary>
-        Dictionary<OrderWithCustomerFullname, Customer> _data = [];
-        /// <summary>
-        /// Источник привязки данных для заказов.
-        /// </summary>
-        BindingSource _bindingSource = [];
+        public List<Customer> Customers { get; set; } = new List<Customer>();
 
         /// <summary>
-        /// Список заказов с полными именами клиентов.
+        /// Selected index of the row in the orders list.
         /// </summary>
-        BindingList<OrderWithCustomerFullname> OrdersWithCustomerFullname { get; set; }
-        /// <summary>
-        /// Получает или задает список клиентов.
-        /// При установке значения вызывает метод обновления заказов.
-        /// </summary>
-        /// <value>Список объектов <see cref="Customer"/>, представляющий клиентов.</value>
-        public List<Customer> Customers
-        {
-            get
-            {
-                return _customers;
-            }
-            set
-            {
-                if (value == null) return;
-                _customers = value;
-                UpdateOrders();
-            }
-        }
+        private int _selectedOrderIndex;
+
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="OrdersTab"/>.
+        /// Gets and sets a list of orders.
         /// </summary>
+        private List<Order> _orders = new List<Order>();
+
+        /// <summary>
+        /// Selected order.
+        /// </summary>
+        private Order _selectedOrder = new Order();
+
+
         public OrdersTab()
         {
             InitializeComponent();
-            OrdersWithCustomerFullname = [];
-            StatusComboBox.Items.AddRange(Enum.GetValues(typeof(OrderStatus)).Cast<object>().ToArray());
+
         }
 
         /// <summary>
-        /// Обрабатывает событие клика на ячейке DataGridView для отображения данных заказа.
-        /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void OrdersDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (OrdersDataGridView.CurrentRow != null)
-            {
-                OrderItemsListBox.Items.Clear();
-                _currentOrder = (OrderWithCustomerFullname)OrdersDataGridView.CurrentRow.DataBoundItem;
-                IdTextBox.Text = _currentOrder.Id.ToString();
-                ChangedAtTextBox.Text = _currentOrder.StatusHistory.Aggregate((l, r) => l.Key > r.Key ? l : r).Key.ToString();
-                StatusComboBox.SelectedItem = _currentOrder.Status;
-                OrderItemsListBox.Items.AddRange(_currentOrder.Items.ToArray());
-                AddressControl.Address = _currentOrder.Address;
-                UpdateAmount();
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает изменение выбранного элемента в ComboBox для статуса заказа.
-        /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_currentOrder != null && StatusComboBox.SelectedItem != null)
-            {
-                _data[_currentOrder].Orders.Find((order) => order.Id == _currentOrder.Id)!.Status = (OrderStatus)StatusComboBox.SelectedItem;
-                OrdersDataGridView.CurrentRow.Cells["Status"].Value = (OrderStatus)StatusComboBox.SelectedItem;
-                ChangedAtTextBox.Text = _currentOrder.StatusHistory.Aggregate((l, r) => l.Key > r.Key ? l : r).Key.ToString();
-            }
-        }
-
-        private void FindTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (FindTextBox.Text.Length == 0 || OrdersWithCustomerFullname.Count == 0)
-            {
-                _bindingSource.DataSource = OrdersWithCustomerFullname;
-                if (OrdersDataGridView.Columns.Contains("StatusHistory")) OrdersDataGridView.Columns.Remove("StatusHistory");
-                return;
-            };
-            OrdersDataGridView.ClearSelection();
-            _currentOrder = null;
-            OrderItemsListBox.Items.Clear();
-            IdTextBox.Text = "";
-            ChangedAtTextBox.Text = "";
-            StatusComboBox.SelectedItem = null;
-            AddressControl.Address = new Address();
-            string search = FindTextBox.Text.ToLower();
-
-            // Фильтрация данных
-            List<OrderWithCustomerFullname>? filteredOrders = OrdersWithCustomerFullname
-                .Where(order =>
-                {
-                    List<bool> flags = [];
-                    foreach (var prop in typeof(OrderWithCustomerFullname).GetProperties())
-                    {
-                        flags.Add(prop.GetValue(order)!.ToString()!.ToLower().Contains(search));
-                    }
-                    return flags.Any(b => b);
-                })
-                .ToList();
-
-            // Обновляем BindingSource с отфильтрованными данными
-            _bindingSource.DataSource = filteredOrders;
-            if (OrdersDataGridView.Columns.Contains("StatusHistory")) OrdersDataGridView.Columns.Remove("StatusHistory");
-        }
-
-        /// <summary>
-        /// Обновляет информацию о сумме товаров в корзине и отображает ее в AmountLabel.
-        /// </summary>
-        private void UpdateAmount()
-        {
-            if (_currentOrder == null)
-            {
-                AmountLabel.Text = "0";
-                return;
-            };
-            AmountLabel.Text = _currentOrder.Amount.ToString();
-        }
-
-        /// <summary>
-        /// Обновляет список заказов, привязанный к клиентам.
-        /// </summary>
-        public void UpdateOrders()
-        {
-            Customers.ForEach((customer) =>
-            {
-                if (customer.Orders.Count == 0) return;
-                foreach (Order order in customer.Orders)
-                {
-                    OrderWithCustomerFullname orderWithCustomerFullname = new OrderWithCustomerFullname(order, customer.Fullname);
-                    OrdersWithCustomerFullname.Add(orderWithCustomerFullname);
-                    _data.Add(orderWithCustomerFullname, customer);
-                }
-            });
-            _bindingSource.DataSource = OrdersWithCustomerFullname;
-            OrdersDataGridView.DataSource = _bindingSource;
-            if (OrdersDataGridView.Columns.Contains("StatusHistory")) OrdersDataGridView.Columns.Remove("StatusHistory");
-        }
-
-        /// <summary>
-        /// Отключает ввод данных в текстовое поле при нажатии клавиши.
-        /// </summary>
-        private void DisableTextBox(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        /// <summary>
-        /// Обновление данных на вкладке.
+        /// Refreshes data in OrdersDataGRidView.
         /// </summary>
         public void RefreshData()
         {
-            _currentOrder = null;
-            _data.Clear();
-            OrderItemsListBox.Items.Clear();
-            OrdersWithCustomerFullname.Clear();
-            OrdersDataGridView.ClearSelection();
-            IdTextBox.Text = "";
-            ChangedAtTextBox.Text = "";
-            StatusComboBox.SelectedItem = null;
-            AddressControl.Address = new Address();
-            UpdateAmount();
+            OrdersDataGridView.Rows.Clear();
+            _orders = new List<Order>();
             UpdateOrders();
+            //RefreshDataGrid();
+            LoadStatusComboBox();
+        }
+
+
+        //public void RefreshDataGrid()
+        //{
+        //    OrdersDataGridView.Rows.Clear();
+
+        //    foreach (Order order in _orders)
+        //    {
+        //        OrdersDataGridView.Rows.Add(order.Id, order.Date, order.Status, /*$"{order.Address.Country}, " +
+        //            $"{order.Address.City}, {order.Address.Street}, {order.Address.Building}," +
+        //            $"{order.Address.Apartment}"*/ );
+        //    }
+        //}
+
+
+        /// <summary>
+        /// Updates orders in DataGridView.
+        /// </summary>
+        private void UpdateOrders()
+        {
+            _orders.Clear();
+            OrdersDataGridView.Rows.Clear();
+
+            foreach (var customer in Customers)
+            {
+                var address = $"{customer.CustomerAddress.Country}, {customer.CustomerAddress.City}";
+                address += $"{customer.CustomerAddress.Street}, {customer.CustomerAddress.Building}";
+                address += $"{customer.CustomerAddress.Apartment}";
+
+                foreach (var order in customer.Orders)
+                {
+                    _orders.Add(order);
+                    OrdersDataGridView.Rows.Add(
+                        order.Id, order.Date, order.Status,
+                        customer.Fullname, order.Amount
+                        );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds elements of enum Orderstatus into StatusComboBox.
+        /// </summary>
+        private void LoadStatusComboBox()
+        {
+            StatusComboBox.Items.Clear();
+
+            foreach (var status in Enum.GetValues(typeof(OrderStatus)))
+            {
+                StatusComboBox.Items.Add(status);
+            }
+        }
+
+        /// <summary>
+        /// Fills the list with orders.
+        /// </summary>
+        private void FillOrderItemsListBox()
+        {
+            OrderItemsListBox.Items.Clear();
+
+            foreach (Item item in _orders[_selectedOrderIndex].Items)
+            {
+                OrderItemsListBox.Items.Add(item.Name);
+            }
+        }
+
+        private void OrdersDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (OrdersDataGridView.SelectedRows.Count != 0)
+            {
+                _selectedOrderIndex = OrdersDataGridView.SelectedRows[0].Index;
+                _selectedOrder = _orders[_selectedOrderIndex];
+
+                AddressControl.OurAddress = _orders[_selectedOrderIndex].Address;
+                AddressControl.SelelctedTextBoxs();
+
+                IdTextBox.Text = _selectedOrder.Id.ToString();
+                CreatedTextBox.Text = _selectedOrder.Date.ToString();
+                StatusComboBox.SelectedItem = _selectedOrder.Status;
+                TotalCostLabel.Text = _selectedOrder.Amount.ToString();
+
+                FillOrderItemsListBox();
+            }
+        }
+
+        private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string ourStatus = StatusComboBox.Text;
+                OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
+                _selectedOrder.Status = orderStatus;
+                //RefreshDataGrid();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(
+                    "Incorrect status of the order.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1);
+                return;
+            }
         }
     }
 }

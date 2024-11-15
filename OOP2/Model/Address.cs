@@ -8,171 +8,129 @@ using System.Threading.Tasks;
 namespace OOP2.Model
 {
     /// <summary>
-    /// Представляет адрес с почтовым индексом, страной, городом, улицей, номером дома и квартирой.
+    /// Has the data about the address.
     /// </summary>
     public class Address
     {
         /// <summary>
-        /// Почтовый индекс.
+        /// Postal code.
         /// </summary>
-        int _index;
-        /// <summary>
-        /// Страна/регион.
-        /// </summary>
-        string _country;
-        /// <summary>
-        /// Город.
-        /// </summary>
-        string _city;
-        /// <summary>
-        /// Улица.
-        /// </summary>
-        string _street;
-        /// <summary>
-        /// Номер дома.
-        /// </summary>
-        string _building;
-        /// <summary>
-        /// Номер квартиры/помещения.
-        /// </summary>
-        string _apartment;
+        private int _index;
 
         /// <summary>
-        /// Получает или задает почтовый индекс.
+        /// Country/region.
         /// </summary>
-        /// <remarks>
-        /// Почтовый индекс должен находиться в диапазоне от 100000 до 999999.
-        /// </remarks>
+        private string _country = string.Empty;
+
+        /// <summary>
+        /// City.
+        /// </summary>
+        private string _city = string.Empty;
+
+        /// <summary>
+        /// Street.
+        /// </summary>
+        private string _street = string.Empty;
+
+        /// <summary>
+        /// House number.
+        /// </summary>
+        private string _building = string.Empty;
+
+        /// <summary>
+        /// Apartment number.
+        /// </summary>
+        private string _apartment = string.Empty;
+
+        /// <summary>
+        /// Gets and sets a postal index. Supposed to have 6 numbers in it.
+        /// </summary>
         public int Index
         {
-            get
-            {
-                return _index;
-            }
+            get { return _index; }
             set
             {
-                ValueValidator.AssertValueInRange(value, 100000, 1000000, nameof(Index));
+                ValueValidator.AssertStringOnLength(value, 100000, 999999, "Index");
                 _index = value;
             }
         }
 
+
         /// <summary>
-        /// Получает или задает страну.
+        /// Gets and sets country/region. Not lonegr than 50 symbols.
         /// </summary>
-        /// <remarks>
-        /// Название страны должно быть не длиннее 50 символов.
-        /// </remarks>
         public string Country
         {
-            get
-            {
-                return _country;
-            }
+            get { return _country; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 50, nameof(Country));
+                ValueValidator.AssertStringOnLength(value, 50, "Country");
                 _country = value;
             }
         }
 
         /// <summary>
-        /// Получает или задает город.
+        /// Gets and sets a city. Not longer than 50 symbols.
         /// </summary>
-        /// <remarks>
-        /// Название города должно быть не длиннее 50 символов.
-        /// </remarks>
         public string City
         {
-            get
-            {
-                return _city;
-            }
+            get { return _city; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 50, nameof(City));
+                ValueValidator.AssertStringOnLength(value, 50, "City");
                 _city = value;
             }
         }
 
         /// <summary>
-        /// Получает или задает улицу.
+        /// Gets and sets a street. Not longer than 100 symbols.
         /// </summary>
-        /// <remarks>
-        /// Название улицы должно быть не длиннее 100 символов.
-        /// </remarks>
         public string Street
         {
-            get
-            {
-                return _street;
-            }
+            get { return _street; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 100, nameof(Street));
+                ValueValidator.AssertStringOnLength(value, 100, "Street");
                 _street = value;
             }
         }
 
         /// <summary>
-        /// Получает или задает номер здания.
+        /// Gets and ssets a house number. Not longer than 10 symbols.
         /// </summary>
-        /// <remarks>
-        /// Номер здания должен быть не длиннее 10 символов.
-        /// </remarks>
         public string Building
         {
-            get
-            {
-                return _building;
-            }
+            get { return _building; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 10, nameof(Building));
+                ValueValidator.AssertStringOnLength(value, 10, "Building");
                 _building = value;
             }
         }
 
         /// <summary>
-        /// Получает или задает номер квартиры.
+        /// Gets and ssets an apartment. Not longer than 10 symbols.
         /// </summary>
-        /// <remarks>
-        /// Номер квартиры должен быть не длиннее 10 символов.
-        /// </remarks>
         public string Apartment
         {
-            get
-            {
-                return _apartment;
-            }
+            get { return _apartment; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 10, nameof(Apartment));
+                ValueValidator.AssertStringOnLength(value, 10, "Apartment");
                 _apartment = value;
             }
         }
 
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Address"/> со значениями по умолчанию.
-        /// </summary>
-        public Address()
-        {
-            Index = 100000;
-            Country = "";
-            City = "";
-            Street = "";
-            Building = "";
-            Apartment = "";
-        }
 
         /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="Address"/> с заданными значениями.
+        /// Creates a sample of the class <see cref="Address"/>.
         /// </summary>
         /// <param name="index">Почтовый индекс.</param>
-        /// <param name="country">Страна.</param>
-        /// <param name="city">Город.</param>
+        /// <param name="country">Страна или регион.</param>
+        /// <param name="city">Город(населенный пункт).</param>
         /// <param name="street">Улица.</param>
-        /// <param name="building">Номер здания.</param>
-        /// <param name="apartment">Квартира.</param>
+        /// <param name="building">Номер дома.</param>
+        /// <param name="apartment">Номер кватиры или помещения.</param>
         public Address(int index, string country, string city, string street, string building, string apartment)
         {
             Index = index;
@@ -184,12 +142,17 @@ namespace OOP2.Model
         }
 
         /// <summary>
-        /// Представление класса в виде строки.
+        /// Creates a sample of the class <see cref="Address"/>.
         /// </summary>
-        /// <returns>Строка.</returns>
-        public override string ToString()
+        public Address()
         {
-            return $"{Index}, {Country}, {City}, {Street}, {Building}, {Apartment}";
+            Index = 100000;
+            Country = string.Empty;
+            City = string.Empty;
+            Street = string.Empty;
+            Building = string.Empty;
+            Apartment = string.Empty;
         }
+
     }
 }

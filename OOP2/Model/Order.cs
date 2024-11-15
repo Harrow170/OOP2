@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOP2.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,121 +8,110 @@ using System.Threading.Tasks;
 namespace OOP2.Model
 {
     /// <summary>
-    /// Класс, представляющий заказ.
+    /// Holds data of a customers order.
     /// </summary>
     public class Order
     {
         /// <summary>
-        /// Уникальный идентификатор заказа.
+        /// Order's id.
         /// </summary>
-        Guid _id;
-        /// <summary>
-        /// Статус заказа.
-        /// </summary>
-        OrderStatus _status;
-        /// <summary>
-        /// Дата и время изменения статуса заказа.
-        /// </summary>
-        Dictionary<DateTime, OrderStatus> _statusHistory;
-        /// <summary>
-        /// Адрес доставки заказа.
-        /// </summary>
-        Address _address;
-        /// <summary>
-        /// Список товаров в заказе.
-        /// </summary>
-        List<Item> _items;
+        private readonly int _id;
 
         /// <summary>
-        /// Получает уникальный идентификатор заказа.
+        /// Date of order's creation.
         /// </summary>
-        public Guid Id
-        {
-            get { return _id; }
-            private set { _id = value; }
-        }
+        private readonly DateTime _date = DateTime.Now;
+
         /// <summary>
-        /// Получает или задает статус заказа.
+        /// Returns unique id.
         /// </summary>
-        public OrderStatus Status
+        public int Id
         {
-            get { return _status; }
-            set
+            get
             {
-                if ((_status != value && _status != OrderStatus.New && StatusHistory.Count > 0) || (value == OrderStatus.New && StatusHistory.Count <= 1))
-                {
-                    StatusHistory.Add(DateTime.Now, value);
-                }
-                _status = value;
+                return _id;
             }
         }
+
         /// <summary>
-        /// Получает дату и время создания заказа.
+        /// Date of order's creation.
         /// </summary>
-        public Dictionary<DateTime, OrderStatus> StatusHistory
+        public DateTime Date
         {
-            get { return _statusHistory; }
-            private set { _statusHistory = value; }
+            get
+            {
+                return _date;
+            }
         }
+
         /// <summary>
-        /// Получает или задает адрес доставки заказа.
+        /// Gets and sets order's status.
         /// </summary>
-        public Address Address
-        {
-            get { return _address; }
-            set { _address = value; }
-        }
+        public OrderStatus Status { get; set; } = OrderStatus.New;
+
         /// <summary>
-        /// Получает или задает список товаров в заказе.
+        /// Gets ans sets delivery Address.
         /// </summary>
-        public List<Item> Items
-        {
-            get { return _items; }
-            set { _items = value; }
-        }
+        public Address Address { get; set; } = new Address();
+
         /// <summary>
-        /// Получает общую сумму заказа.
+        /// Gets and sets a list of new items.                                 
+        /// </summary>
+        public List<Item> Items { get; set; } = new List<Item>();
+
+
+        /// <summary>
+        /// Gets a total cost of a cart.
         /// </summary>
         public double Amount
         {
             get
             {
-                double sum = 0;
-                Items.ForEach(x => { sum += x.Cost; });
-                return Math.Round(sum, 2); ;
+                if (Items.Count != 0 && Items != null)
+                {
+                    double amount = 0.0;
+                    foreach (var item in Items)
+                    {
+                        amount += item.Cost;
+                    }
+                    return amount;
+
+                }
+                else
+                {
+                    return 0.0;
+                }
             }
         }
 
         /// <summary>
-        /// Инициализирует новый экземпляр заказа.
+        /// Creates a sample of a class <see cref="Order"/>.
         /// </summary>
-        /// <param name="id">Идентификатор заказа.</param>
-        /// <param name="createdAt">Дата создания.</param>
-        /// <param name="status">Статус заказа.</param>
-        /// <param name="address">Адрес доставки.</param>
-        /// <param name="items">Список товаров в заказе.</param>
-        public Order(Guid id, Dictionary<DateTime, OrderStatus> statusHistory, OrderStatus status, Address address, List<Item> items)
+        /// <param name="status">Order's status.</param>
+        /// <param name="address">Delivery address.</param>
+        /// <param name="items">List of items.</param>
+        public Order(Address address, List<Item> items)
         {
-            Id = id;
-            StatusHistory = statusHistory;
-            Status = status;
+            _id = IdGenerator.GetNextId();
+            Status = new OrderStatus();
             Address = address;
-            Items = new List<Item>(items);
+            _date = DateTime.Now;
+            foreach (Item item in items)
+            {
+                Items.Add(item);
+            }
         }
-    }
-    /// <summary>
-    /// Вспомогательный класс, представляющий заказ с полным именем клиента.
-    /// </summary>
-    public class OrderWithCustomerFullname : Order
-    {
-        public string CustomerFullname { get; private set; }
-        public string ChangedAt { get; private set; }
 
-        public OrderWithCustomerFullname(Order order, string customerFullname)
-            : base(order.Id, order.StatusHistory, order.Status, order.Address, order.Items)
+        /// <summary>
+        /// Creates a sample of a class <see cref="Order"/>.
+        /// </summary>
+        public Order()
         {
-            CustomerFullname = customerFullname;
-            ChangedAt = order.StatusHistory.Aggregate((l, r) => l.Key > r.Key ? l : r).Key.ToString();
+            _id = IdGenerator.GetNextId();
+            _date = DateTime.Now;
+            Status = new OrderStatus();
+            Items = new List<Item>();
         }
+
     }
 }

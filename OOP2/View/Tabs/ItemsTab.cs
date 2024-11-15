@@ -5,11 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OOP2.Model;
 using OOP2.Services;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OOP2.View.Tabs
 {
@@ -20,239 +20,223 @@ namespace OOP2.View.Tabs
     public partial class ItemsTab : UserControl
     {
         /// <summary>
-        /// Список товаров.
+        /// List of items.
         /// </summary>
-        List<Item> _items;
-        /// <summary>
-        /// Текущий выбранный товар.
-        /// </summary>
-        Item _currentItem;
-        /// <summary>
-        /// Флаг, указывающий на системные изменения, чтобы избежать лишних действий при обновлении UI.
-        /// </summary>
-        bool _isSystemChanged = false;
+        public List<Item> _items = new();
 
         /// <summary>
-        /// Получает или задает список товаров.
-        /// При установке значения добавляет товары в ListBox и вызывает событие сброса выбранного элемента.
+        /// Variable - type Item.
         /// </summary>
-        /// <value>Список объектов <see cref="Items"/>, представляющий клиентов.</value>
-        public List<Item> Items
-        {
-            get
-            {
-                return _items;
-            }
-            set
-            {
-                if (value == null) return;
-                _items = value;
-                ItemsListBox.Items.AddRange(value.ToArray());
-                SelectedItemEvent(true);
-            }
-        }
+        private Item _currentItem = new Item();
 
         /// <summary>
-        /// Инициализирует новый экземпляр <c>ItemsTab</c>.
+        /// Variable - type Item.
         /// </summary>
+        private Item _selectedItem = new Item();
+
+        /// <summary>
+        /// Gets and sets a list of item.
+        /// </summary>
+        public List<Item> Items { get { return _items; } set { _items = value; } }
+
         public ItemsTab()
         {
             InitializeComponent();
-            SelectedItemEvent(true);
-            CategoryComboBox.Items.AddRange(Enum.GetValues(typeof(Category)).Cast<object>().ToArray());
+            LoadCategoryComboBox();
         }
 
         /// <summary>
-        /// Обработчик события нажатия кнопки добавления нового товара.
+        /// Generates objects of an item with TextBoxes.
         /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Данные события.</param>
-        private void AddItemButton_Click(object sender, EventArgs e)
+        private Model.Item AddItemsInfo()
         {
-            Items.Add(new Item());
-            ItemsListBox.Items.Add(Items[Items.Count - 1]);
+            string name = NameTextBox.Text;
+            string description = DescriptionTextBox.Text;
+            double cost = double.Parse(CostTextBox.Text);
+            Category category = (Category)CategoryComboBox.SelectedItem;
+            return new Model.Item(name, description, cost);
         }
 
         /// <summary>
-        /// Обработчик события нажатия кнопки удаления текущего товара.
+        /// Adds list elements to ItemListBox.
         /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Данные события.</param>
-        private void RemoveItemButton_Click(object sender, EventArgs e)
+        private void UpdateListBox()
         {
-            if (_currentItem != null)
+            ItemsListBox.Items.Clear();
+
+            foreach (Item item in _items)
             {
-                Items.Remove(_currentItem);
-                ItemsListBox.Items.Remove(_currentItem);
-                SelectedItemEvent(true);
+                ItemsListBox.Items.Add($"{item.Id} / {item.Name} / {item.Category}");
             }
         }
 
         /// <summary>
-        /// Обрабатывает событие изменения выбранного элемента в ComboBox для категорий.
+        /// Clears info about an item from TextBoxes.
         /// </summary>
-        /// <param name="sender">Источник события, ComboBox.</param>
-        /// <param name="e">Аргументы события изменения индекса.</param>
-        private void ItemDataGenerateButton_Click(object sender, EventArgs e)
+        private void ClearItemInfo()
         {
-            if (_currentItem == null || ItemsListBox.SelectedItems == null || !int.TryParse(IdTextBox.Text, out int _)) return;
-            Item item = ItemFactory.Randomize();
-            NameRichTextBox.Text = item.Name;
-            DescriptionRichTextBox.Text = item.Info;
-            CostTextBox.Text = item.Cost.ToString();
-            CategoryComboBox.SelectedItem = item.Category;
-            ItemsListBox.SelectedItem = _currentItem;
+            IDTextBox.Clear();
+
+            CostTextBox.Clear();
+            CostTextBox.BackColor = Color.White;
+
+            DescriptionTextBox.Clear();
+            DescriptionTextBox.BackColor = Color.White;
+
+            NameTextBox.Clear();
+            NameTextBox.BackColor = Color.White;
+
+            CategoryComboBox.SelectedIndex = -1;
         }
 
         /// <summary>
-        /// Обрабатывает изменение текста в поле CostTextBox. 
-        /// В случае ошибки отображает всплывающую подсказку с сообщением и меняет фон на розовый.
+        /// Updates info about an item in TextBox.
         /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void CostTextBox_TextChanged(object sender, EventArgs e)
+        /// <param name="item">Обновляемая книга.</param>
+        private void UpdateItemInfo(Item item)
         {
-            if (_currentItem == null || _isSystemChanged) return;
+            IDTextBox.Text = item.Id.ToString();
+            DescriptionTextBox.Text = item.Info.ToString();
+            CostTextBox.Text = item.Cost.ToString();
+            NameTextBox.Text = item.Name.ToString();
+            CategoryComboBox.Text = item.Category.ToString();
+        }
 
-            if (!Double.TryParse(CostTextBox.Text, out double cost))
+        private void NameTextBox_TextChanged_1(object sender, EventArgs e)
+        {
+            try
             {
-                CostTextBox.BackColor = Color.Pink;
+                _currentItem.Name = NameTextBox.Text;
+                NameTextBox.BackColor = Color.White;
+            }
+            catch (ArgumentException)
+            {
+                NameTextBox.BackColor = Color.LightPink;
+            }
+        }
+
+        private void CostTextBox_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                _currentItem.Cost = double.Parse(CostTextBox.Text);
+                CostTextBox.BackColor = Color.White;
+            }
+            catch (Exception)
+            {
+                if (CostTextBox.Text != "")
+                {
+                    CostTextBox.BackColor = Color.LightPink;
+                }
+            }
+
+        }
+
+        private void DescriptionTextBox_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                _currentItem.Info = DescriptionTextBox.Text;
+                DescriptionTextBox.BackColor = Color.White;
+            }
+            catch (ArgumentException)
+            {
+                DescriptionTextBox.BackColor = Color.LightPink;
+            }
+        }
+
+        private void RemoveButton_Click(object sender, EventArgs e)
+        {
+            if (ItemsListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show(
+                    "No selected items.",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error,
+                    MessageBoxDefaultButton.Button1);
                 return;
             }
+            _items.RemoveAt(ItemsListBox.SelectedIndex);
+            ItemsListBox.Items.RemoveAt(ItemsListBox.SelectedIndex);
+            ClearItemInfo();
+        }
 
+        private void ItemsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ItemsListBox.SelectedItem != null)
+            {
+                _currentItem = _items[ItemsListBox.SelectedIndex];
+                UpdateItemInfo(_currentItem);
+            }
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
             try
             {
-                CostTextBox.BackColor = Color.White;
-                _currentItem.Cost = cost;
+                // list of TextBoxes
+                var TextBoxes = new List<TextBox> { CostTextBox, NameTextBox, DescriptionTextBox };
+                bool RedBox = true;
+
+                foreach (var TextBox in TextBoxes)
+                {
+                    if (TextBox.BackColor == Color.LightPink)
+                    {
+                        RedBox = false;
+                    }
+                }
+                // check for empty or red boxes.
+                if (TextBoxes.All(tb => !string.IsNullOrWhiteSpace(tb.Text))
+                    && CategoryComboBox.SelectedItem != null && RedBox)
+                {
+                    Item selectedItem = AddItemsInfo();
+                    selectedItem.Category = (Category)CategoryComboBox.SelectedItem;
+                    _items.Add(selectedItem);
+                    UpdateListBox();
+                }
+                else
+                {
+                    throw new Exception("Incorrect Values. ");
+                }
+
             }
-            catch (ArgumentException error)
+            catch (Exception ex)
             {
-                CreateTooltip(CostTextBox, error.Message);
-                CostTextBox.BackColor = Color.Pink;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
+        }
+
+
+        private void ItemsListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (ItemsListBox.SelectedItem != null)
+            {
+                UpdateListBox();
+                _currentItem = _selectedItem;
             }
         }
 
         /// <summary>
-        /// Обрабатывает изменение текста в поле NameRichTextBox. 
-        /// В случае ошибки отображает всплывающую подсказку с сообщением и меняет фон на розовый.
+        /// Adds elements of Category into CategoryComboBox.
         /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void NameRichTextBox_TextChanged(object sender, EventArgs e)
+        private void LoadCategoryComboBox()
         {
-            if (_currentItem == null || _isSystemChanged) return;
-
-            try
+            foreach (var item in Enum.GetValues(typeof(Category)))
             {
-                NameRichTextBox.BackColor = Color.White;
-                _currentItem.Name = NameRichTextBox.Text;
-                UpdateItemsListBox();
-            }
-            catch (ArgumentException error)
-            {
-                CreateTooltip(NameRichTextBox, error.Message);
-                NameRichTextBox.BackColor = Color.Pink;
-            }
-        }
-
-        /// <summary>
-        /// Обрабатывает изменение текста в поле DescriptionRichTextBox. 
-        /// В случае ошибки отображает всплывающую подсказку с сообщением и меняет фон на розовый.
-        /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Аргументы события.</param>
-        private void DescriptionRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (_currentItem == null || _isSystemChanged) return;
-
-            try
-            {
-                DescriptionRichTextBox.BackColor = Color.White;
-                _currentItem.Info = DescriptionRichTextBox.Text;
-            }
-            catch (ArgumentException error)
-            {
-                CreateTooltip(DescriptionRichTextBox, error.Message);
-                DescriptionRichTextBox.BackColor = Color.Pink;
+                CategoryComboBox.Items.Add(item);
             }
         }
 
         private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_currentItem == null || CategoryComboBox.SelectedItem == null || _isSystemChanged) return;
-
-            _currentItem.Category = (Category)CategoryComboBox.SelectedItem;
-        }
-
-        /// <summary>
-        /// Обработчик выбора товара в списке.
-        /// Обновляет текущий товар и отображает его данные.
-        /// </summary>
-        /// <param name="sender">Источник события.</param>
-        /// <param name="e">Данные события.</param>
-        private void ItemsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ItemsListBox.SelectedItem != null)
+            if (CategoryComboBox.SelectedItem != null && ItemsListBox.SelectedItem != null)
             {
-                _currentItem = (Item)ItemsListBox.SelectedItem;
-                _isSystemChanged = true;
-                SelectedItemEvent();
-                _isSystemChanged = false;
+                _currentItem.Category = (Category)CategoryComboBox.SelectedItem;
+                UpdateItemInfo(_currentItem);
             }
         }
-
-        /// <summary>
-        /// Обновляет список клиентов в <c>ItemsListBox</c> и выделяет текущий товар.
-        /// </summary>
-        private void UpdateItemsListBox()
-        {
-            ItemsListBox.Items.Clear();
-            ItemsListBox.Items.AddRange(Items.ToArray());
-        }
-
-        /// <summary>
-        /// Обновляет текстовые поля в зависимости от выбранного клиента.
-        /// </summary>
-        /// <param name="isEmpty">Указывает, отображать ли заглушку.</param>
-        private void SelectedItemEvent(bool isEmpty = false)
-        {
-            IdTextBox.BackColor = NameRichTextBox.BackColor = DescriptionRichTextBox.BackColor = CostTextBox.BackColor = Color.White;
-            IdTextBox.Text = isEmpty ? "Ничего не выбрано" : _currentItem.Id.ToString();
-            NameRichTextBox.Text = isEmpty ? "" : _currentItem.Name.ToString();
-            DescriptionRichTextBox.Text = isEmpty ? "" : _currentItem.Info.ToString();
-            CostTextBox.Text = isEmpty ? "0" : _currentItem.Cost.ToString();
-            CategoryComboBox.SelectedItem = isEmpty ? null : _currentItem.Category;
-        }
-
-        /// <summary>
-        /// Создает подсказку с сообщением об ошибке для текстового поля.
-        /// </summary>
-        /// <param name="textBox">Текстовое поле, для которого создается подсказка.</param>
-        /// <param name="errorMessage">Сообщение об ошибке.</param>
-        private void CreateTooltip(TextBox textBox, string errorMessage)
-        {
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutomaticDelay = 500;
-            toolTip.SetToolTip(textBox, errorMessage);
-        }
-        /// <summary>
-        /// Создает подсказку с сообщением об ошибке для большого текстового поля.
-        /// </summary>
-        /// <param name="richTextBox">Поле с текстом, для которого создается подсказка.</param>
-        /// <param name="errorMessage">Сообщение об ошибке.</param>
-        private void CreateTooltip(RichTextBox richTextBox, string errorMessage)
-        {
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutomaticDelay = 500;
-            toolTip.SetToolTip(richTextBox, errorMessage);
-        }
-
-        /// <summary>
-        /// Отключает ввод данных в текстовое поле при нажатии клавиши.
-        /// </summary>
-        private void DisableTextBox(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
     }
+
 }

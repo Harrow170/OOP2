@@ -3,41 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OOP2.Model
-{ 
- /// <summary>
- /// Класс, представляющий корзину покупок.
- /// </summary>
-    public class Cart
 {
     /// <summary>
-    /// Список товаров в корзине.
+    /// Holds data of a customers cart.
     /// </summary>
-    List<Item> _items = [];
-
-    /// <summary>
-    /// Получает или задает список товаров в корзине.
-    /// </summary>
-    public List<Item> Items
+    public class Cart
     {
-        get { return _items; }
-        set { _items = value; }
-    }
+        /// <summary>
+        /// Create a variable of a Item type.
+        /// </summary>
+        private List<Item> _items = new List<Item>();
 
-    /// <summary>
-    /// Рассчитывает и возвращает общую сумму всех товаров в корзине.
-    /// </summary>
-    /// <returns>Суммарная стоимость товаров в корзине.</returns>
-    public double Amount
-    {
-        get
+        /// <summary>
+        /// Gets and sets items.
+        /// </summary>
+        public List<Item> Items
         {
-            double sum = 0;
-            Items.ForEach(x => { sum += x.Cost; });
-            return Math.Round(sum, 2); ;
+            get { return _items; }
+            set { _items = value; }
         }
+
+        /// <summary>
+        /// Gets the cost of all item in the cart.
+        /// </summary>
+        public double Amount
+        {
+            get
+            {
+                if (_items.Count != 0 && _items != null)
+                {
+                    double amount = 0.0;
+                    foreach (var item in _items)
+                    {
+                        amount += item.Cost;
+                    }
+                    return amount;
+
+                }
+                else
+                {
+                    return 0.0;
+                }
+            }
+        }
+
+
+
     }
-}
 }

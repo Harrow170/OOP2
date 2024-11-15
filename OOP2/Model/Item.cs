@@ -9,118 +9,107 @@ using OOP2.Services;
 namespace OOP2.Model
 {
     /// <summary>
-    /// Класс Item представляет объект товара.
+    /// Holds data of items.
     /// </summary>
     public class Item
     {
         /// <summary>
-        /// Категория товара.
+        /// Unique number of the item.
         /// </summary>
-        public Category Category { get; set; }
-        /// <summary>
-        /// Идентификатор товара.
-        /// </summary>
-        readonly int _id;
-        /// <summary>
-        /// Наименование товара.
-        /// </summary>
-        string _name;
-        /// <summary>
-        /// Подробная информация о товаре.
-        /// </summary>
-        string _info;
-        /// <summary>
-        /// Стоимость товара.
-        /// </summary>
-        double _cost;
+        private readonly int _id;
 
         /// <summary>
-        /// Возвращает идентификатор товара.
+        /// Name of the item.
         /// </summary>
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
+        private string _name;
+
         /// <summary>
-        /// Возвращает или меняет наименование товара.
+        /// Description of the item.
+        /// </summary>
+        private string _info;
+
+        /// <summary>
+        /// Cost of the item.
+        /// </summary>
+        private double _cost;
+
+        /// <summary>
+        /// Returns unique number of the item.
+        /// </summary>
+        public int Id { get { return _id; } }
+
+        /// <summary>
+        /// Gets and sets the name of the item.
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 200, nameof(Name));
+                ValueValidator.AssertStringOnLength(value, 200, nameof(_name));
                 _name = value;
             }
         }
+
         /// <summary>
-        /// Возвращает или меняет информацию о товаре.
+        /// Gets and sets the description of the item.
         /// </summary>
         public string Info
         {
-            get
-            {
-                return _info;
-            }
+            get { return _info; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 2000, nameof(Info));
+                ValueValidator.AssertStringOnLength(value, 1000, nameof(_info));
                 _info = value;
             }
         }
+
         /// <summary>
-        /// Возвращает или меняет стоимость товара.
+        /// Gets and sets the price of the item.
         /// </summary>
         public double Cost
         {
-            get
-            {
-                return _cost;
-            }
+            get { return _cost; }
             set
             {
-                ValueValidator.AssertValueInRange(value, 0, 100000, nameof(Cost));
+                ValueValidator.AssertStringOnLength(value, 0, 100000, nameof(_cost));
                 _cost = value;
             }
         }
 
         /// <summary>
-        /// Конструктор класса Item.
+        /// Gets and sets item's category. <see cref="Item"/>.
         /// </summary>
-        public Item()
-        {
-            _id = IdGenerator.GetNextId();
-            Name = Id.ToString();
-            Info = "";
-            Cost = 0;
-            Category = Category.Electronics;
-        }
+        public Category Category { get; set; }
+
 
         /// <summary>
-        /// Конструктор класса Item.
+        /// Creates a sample of the class <see cref="Item"/>.
         /// </summary>
-        /// <param name="name">Наименование товара.</param>
-        /// <param name="info">Подробная информация о товаре.</param>
-        /// <param name="cost">Стоимость товара.</param>
-        /// <param name="category">Категория товара.</param>
-        public Item(string name, string info, double cost, Category category)
+        /// <param name="name">Name of the item.</param>
+        /// <param name="info">Description of the item.</param>
+        /// <param name="cost">Cost of the item.</param>
+        /// <param name="category">Category of the item.</param>
+        public Item(string name, string info, double cost)
         {
-            _id = IdGenerator.GetNextId();
             Name = name;
             Info = info;
             Cost = cost;
-            Category = category;
+            _id = IdGenerator.GetNextId();
+            Category = new Category();
         }
 
-        public override string ToString()
+        /// <summary>
+        /// Creates an emprty sample of the class <see cref="Item"/>.
+        /// </summary>
+        public Item()
         {
-            return Name;
+            Name = string.Empty;
+            Info = string.Empty;
+            Cost = 0;
+            _id = IdGenerator.GetNextId();
+            Category = new Category();
         }
+
     }
 }

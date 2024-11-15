@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OOP2.Model;
@@ -19,173 +20,154 @@ namespace OOP2.View.Controls
     public partial class AddressControl : UserControl
     {
         /// <summary>
-        /// Поле, которое хранит адресс.
+        /// Variable type - Address.
         /// </summary>
-        Address _address;
+        private Address _address = new Address();
 
         /// <summary>
-        /// Получает или устанавливает объект <see cref="Address"/>.
-        /// При установке нового значения обновляются данные в пользовательском элементе управления.
+        /// Gets and sets an address.
         /// </summary>
-        public Address Address
-        {
-            get
-            {
-                return _address;
-            }
-            set
-            {
-                _address = value;
-                UpdateData();
-            }
-        }
+        public Address OurAddress { get { return _address; } set { _address = value; } }
 
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="AddressControl"/> и устанавливает начальное значение для <see cref="Address"/>.
-        /// </summary>
+
         public AddressControl()
         {
             InitializeComponent();
-            Address = new Address();
         }
 
         /// <summary>
-        /// Обрабатывает событие изменения текста в поле индекса почты.
-        /// Проверяет валидность введенного значения и обновляет свойство <see cref="Address.Index"/> если значение корректно.
+        /// Updates information in TextBoxes.
         /// </summary>
+        public void SelelctedTextBoxs()
+        {
+            PostIndexTextBox.Text = OurAddress.Index.ToString();
+            CountryTextBox.Text = OurAddress.Country.ToString();
+            CityTextBox.Text = OurAddress.City.ToString();
+            StreetTextBox.Text = OurAddress.Street.ToString();
+            BuildingTextBox.Text = OurAddress.Building.ToString();
+            ApartmentTextBox.Text = OurAddress.Apartment.ToString();
+        }
+
+        /// <summary>
+        /// Clears information in TextBoxes.
+        /// </summary>
+        public void ClearTextBoxes()
+        {
+            PostIndexTextBox.Clear();
+            CountryTextBox.Clear();
+            CityTextBox.Clear();
+            StreetTextBox.Clear();
+            BuildingTextBox.Clear();
+            ApartmentTextBox.Clear();
+        }
+
+        /// <summary>
+        /// Adds information from TextBoxes.                        
+        /// </summary>
+        public Address AddInfoFromTextBox()
+        {
+            int index = int.Parse(PostIndexTextBox.Text);
+            string country = CountryTextBox.Text;
+            string city = CityTextBox.Text;
+            string street = StreetTextBox.Text;
+            string building = BuildingTextBox.Text;
+            string apartment = ApartmentTextBox.Text;
+
+            return new Address(index, country, city, street, building, apartment);
+        }
+
+        /// <summary>
+        /// Edits information from TextBoxes.                     
+        /// </summary>
+        private void EditTextBoxes(Customer customer)
+        {
+            customer.CustomerAddress.Index = int.Parse(PostIndexTextBox.Text);
+            customer.CustomerAddress.Country = CountryTextBox.Text;
+            customer.CustomerAddress.City = CityTextBox.Text;
+            customer.CustomerAddress.Street = StreetTextBox.Text;
+            customer.CustomerAddress.Building = BuildingTextBox.Text;
+            customer.CustomerAddress.Apartment = ApartmentTextBox.Text;
+        }
+
         private void PostIndexTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(PostIndexTextBox.Text, out int index))
-            {
-                PostIndexTextBox.BackColor = Color.Pink;
-                return;
-            }
-
             try
             {
+                _address.Index = int.Parse(PostIndexTextBox.Text);
                 PostIndexTextBox.BackColor = Color.White;
-                Address.Index = index;
             }
-            catch (ArgumentException error)
+            catch (Exception)
             {
-                CreateTooltip(PostIndexTextBox, error.Message);
-                PostIndexTextBox.BackColor = Color.Pink;
+                if (PostIndexTextBox.Text != "")
+                {
+                    PostIndexTextBox.BackColor = Color.LightPink;
+                }
             }
         }
 
-        /// <summary>
-        /// Обрабатывает событие изменения текста в поле страны.
-        /// Обновляет свойство <see cref="Address.Country"/> на основе введенного текста.
-        /// </summary>
-        private void CountryTextBox_TextChanged(object sender, EventArgs e)
+        private void CountyTextBox_TextxChanged(object sender, EventArgs e)
         {
             try
             {
+                _address.Country = CountryTextBox.Text;
                 CountryTextBox.BackColor = Color.White;
-                Address.Country = CountryTextBox.Text;
             }
-            catch (ArgumentException error)
+            catch (ArgumentException)
             {
-                CreateTooltip(CountryTextBox, error.Message);
-                CountryTextBox.BackColor = Color.Pink;
+                CountryTextBox.BackColor = Color.LightPink;
             }
         }
 
-        /// <summary>
-        /// Обрабатывает событие изменения текста в поле города.
-        /// Обновляет свойство <see cref="Address.City"/> на основе введенного текста.
-        /// </summary>
         private void CityTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
+                _address.City = CityTextBox.Text;
                 CityTextBox.BackColor = Color.White;
-                Address.City = CityTextBox.Text;
             }
-            catch (ArgumentException error)
+            catch (ArgumentException)
             {
-                CreateTooltip(CityTextBox, error.Message);
-                CityTextBox.BackColor = Color.Pink;
+                CityTextBox.BackColor = Color.LightPink;
             }
         }
 
-        /// <summary>
-        /// Обрабатывает событие изменения текста в поле улицы.
-        /// Обновляет свойство <see cref="Address.Street"/> на основе введенного текста.
-        /// </summary>
         private void StreetTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
+                _address.Street = StreetTextBox.Text;
                 StreetTextBox.BackColor = Color.White;
-                Address.Street = StreetTextBox.Text;
             }
-            catch (ArgumentException error)
+            catch (ArgumentException)
             {
-                CreateTooltip(StreetTextBox, error.Message);
-                StreetTextBox.BackColor = Color.Pink;
+                StreetTextBox.BackColor = Color.LightPink;
             }
         }
 
-        /// <summary>
-        /// Обрабатывает событие изменения текста в поле здания.
-        /// Обновляет свойство <see cref="Address.Building"/> на основе введенного текста.
-        /// </summary>
         private void BuildingTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
+                _address.Building = BuildingTextBox.Text;
                 BuildingTextBox.BackColor = Color.White;
-                Address.Building = BuildingTextBox.Text;
             }
-            catch (ArgumentException error)
+            catch (ArgumentException)
             {
-                CreateTooltip(BuildingTextBox, error.Message);
-                BuildingTextBox.BackColor = Color.Pink;
+                BuildingTextBox.BackColor = Color.LightPink;
             }
         }
 
-        /// <summary>
-        /// Обрабатывает событие изменения текста в поле квартиры.
-        /// Обновляет свойство <see cref="Address.Apartment"/> на основе введенного текста.
-        /// </summary>
         private void ApartmentTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
+                _address.Apartment = ApartmentTextBox.Text;
                 ApartmentTextBox.BackColor = Color.White;
-                Address.Apartment = ApartmentTextBox.Text;
             }
-            catch (ArgumentException error)
+            catch (ArgumentException)
             {
-                CreateTooltip(ApartmentTextBox, error.Message);
-                ApartmentTextBox.BackColor = Color.Pink;
+                ApartmentTextBox.BackColor = Color.LightPink;
             }
-        }
-
-        /// <summary>
-        /// Обновляет данные в пользовательском элементе управления на основе текущих значений свойства <see cref="Address"/>.
-        /// </summary>
-        private void UpdateData()
-        {
-            PostIndexTextBox.Text = _address.Index.ToString();
-            CountryTextBox.Text = _address.Country;
-            CityTextBox.Text = _address.City;
-            StreetTextBox.Text = _address.Street;
-            BuildingTextBox.Text = _address.Building;
-            ApartmentTextBox.Text = _address.Apartment;
-        }
-
-        /// <summary>
-        /// Создает подсказку с сообщением об ошибке для текстового поля.
-        /// </summary>
-        /// <param name="textBox">Текстовое поле, для которого создается подсказка.</param>
-        /// <param name="errorMessage">Сообщение об ошибке.</param>
-        private void CreateTooltip(TextBox textBox, string errorMessage)
-        {
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutomaticDelay = 500;
-            toolTip.SetToolTip(textBox, errorMessage);
         }
     }
 }

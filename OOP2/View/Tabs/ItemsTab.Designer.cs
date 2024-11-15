@@ -28,268 +28,238 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SelectedItemPanel = new Panel();
-            CategoryComboBox = new ComboBox();
-            CategoryLabel = new Label();
-            SelectedItemLabel = new Label();
-            DescriptionRichTextBox = new RichTextBox();
-            NameRichTextBox = new RichTextBox();
-            CostTextBox = new TextBox();
-            IdTextBox = new TextBox();
-            DescriptionLabel = new Label();
-            NameLabel = new Label();
-            CostLabel = new Label();
-            IdLabel = new Label();
-            ItemsLabel = new Label();
-            ItemsTableLayoutPanel = new TableLayoutPanel();
-            ItemDataGenerateButton = new Button();
-            RemoveItemButton = new Button();
-            AddItemButton = new Button();
+            ItemsGroupBox = new GroupBox();
+            groupBox1 = new GroupBox();
+            RemoveButton = new Button();
+            AddButton = new Button();
             ItemsListBox = new ListBox();
-            SelectedItemPanel.SuspendLayout();
-            ItemsTableLayoutPanel.SuspendLayout();
+            groupBox2 = new GroupBox();
+            CategoryComboBox = new ComboBox();
+            label5 = new Label();
+            DescriptionTextBox = new TextBox();
+            label4 = new Label();
+            NameTextBox = new TextBox();
+            CostTextBox = new TextBox();
+            IDTextBox = new TextBox();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
+            ItemsGroupBox.SuspendLayout();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
-            // SelectedItemPanel
+            // ItemsGroupBox
             // 
-            SelectedItemPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            SelectedItemPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            SelectedItemPanel.BackColor = SystemColors.ControlLightLight;
-            SelectedItemPanel.Controls.Add(CategoryComboBox);
-            SelectedItemPanel.Controls.Add(CategoryLabel);
-            SelectedItemPanel.Controls.Add(SelectedItemLabel);
-            SelectedItemPanel.Controls.Add(DescriptionRichTextBox);
-            SelectedItemPanel.Controls.Add(NameRichTextBox);
-            SelectedItemPanel.Controls.Add(CostTextBox);
-            SelectedItemPanel.Controls.Add(IdTextBox);
-            SelectedItemPanel.Controls.Add(DescriptionLabel);
-            SelectedItemPanel.Controls.Add(NameLabel);
-            SelectedItemPanel.Controls.Add(CostLabel);
-            SelectedItemPanel.Controls.Add(IdLabel);
-            SelectedItemPanel.Location = new Point(347, 3);
-            SelectedItemPanel.Name = "SelectedItemPanel";
-            ItemsTableLayoutPanel.SetRowSpan(SelectedItemPanel, 3);
-            SelectedItemPanel.Size = new Size(468, 406);
-            SelectedItemPanel.TabIndex = 3;
+            ItemsGroupBox.Controls.Add(groupBox1);
+            ItemsGroupBox.Controls.Add(ItemsListBox);
+            ItemsGroupBox.Dock = DockStyle.Left;
+            ItemsGroupBox.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            ItemsGroupBox.Location = new Point(0, 0);
+            ItemsGroupBox.Name = "ItemsGroupBox";
+            ItemsGroupBox.Size = new Size(336, 605);
+            ItemsGroupBox.TabIndex = 0;
+            ItemsGroupBox.TabStop = false;
+            ItemsGroupBox.Text = "Items";
             // 
-            // CategoryComboBox
+            // groupBox1
             // 
-            CategoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            CategoryComboBox.FormattingEnabled = true;
-            CategoryComboBox.Location = new Point(93, 114);
-            CategoryComboBox.Name = "CategoryComboBox";
-            CategoryComboBox.Size = new Size(151, 28);
-            CategoryComboBox.TabIndex = 14;
-            CategoryComboBox.SelectedIndexChanged += CategoryComboBox_SelectedIndexChanged;
-            CategoryComboBox.KeyPress += DisableTextBox;
+            groupBox1.Controls.Add(RemoveButton);
+            groupBox1.Controls.Add(AddButton);
+            groupBox1.Dock = DockStyle.Bottom;
+            groupBox1.Location = new Point(3, 478);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(330, 124);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
             // 
-            // CategoryLabel
+            // RemoveButton
             // 
-            CategoryLabel.AutoSize = true;
-            CategoryLabel.Location = new Point(15, 117);
-            CategoryLabel.Name = "CategoryLabel";
-            CategoryLabel.Size = new Size(72, 20);
-            CategoryLabel.TabIndex = 2;
-            CategoryLabel.Text = "Category:";
+            RemoveButton.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            RemoveButton.Location = new Point(126, 19);
+            RemoveButton.Name = "RemoveButton";
+            RemoveButton.Size = new Size(119, 44);
+            RemoveButton.TabIndex = 8;
+            RemoveButton.Text = "Remove";
+            RemoveButton.UseVisualStyleBackColor = true;
+            RemoveButton.Click += RemoveButton_Click;
             // 
-            // SelectedItemLabel
+            // AddButton
             // 
-            SelectedItemLabel.AutoSize = true;
-            SelectedItemLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            SelectedItemLabel.Location = new Point(13, 8);
-            SelectedItemLabel.Name = "SelectedItemLabel";
-            SelectedItemLabel.Size = new Size(104, 20);
-            SelectedItemLabel.TabIndex = 1;
-            SelectedItemLabel.Text = "Selected Item";
-            // 
-            // DescriptionRichTextBox
-            // 
-            DescriptionRichTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            DescriptionRichTextBox.Location = new Point(13, 296);
-            DescriptionRichTextBox.MinimumSize = new Size(196, 50);
-            DescriptionRichTextBox.Name = "DescriptionRichTextBox";
-            DescriptionRichTextBox.Size = new Size(442, 92);
-            DescriptionRichTextBox.TabIndex = 13;
-            DescriptionRichTextBox.Text = "";
-            DescriptionRichTextBox.TextChanged += DescriptionRichTextBox_TextChanged;
-            // 
-            // NameRichTextBox
-            // 
-            NameRichTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NameRichTextBox.Location = new Point(13, 188);
-            NameRichTextBox.MinimumSize = new Size(196, 0);
-            NameRichTextBox.Name = "NameRichTextBox";
-            NameRichTextBox.Size = new Size(442, 82);
-            NameRichTextBox.TabIndex = 12;
-            NameRichTextBox.Text = "";
-            NameRichTextBox.TextChanged += NameRichTextBox_TextChanged;
-            // 
-            // CostTextBox
-            // 
-            CostTextBox.Location = new Point(93, 81);
-            CostTextBox.Name = "CostTextBox";
-            CostTextBox.Size = new Size(151, 27);
-            CostTextBox.TabIndex = 11;
-            CostTextBox.TextChanged += CostTextBox_TextChanged;
-            // 
-            // IdTextBox
-            // 
-            IdTextBox.Enabled = false;
-            IdTextBox.Location = new Point(93, 48);
-            IdTextBox.Name = "IdTextBox";
-            IdTextBox.ReadOnly = true;
-            IdTextBox.Size = new Size(151, 27);
-            IdTextBox.TabIndex = 10;
-            IdTextBox.KeyPress += DisableTextBox;
-            // 
-            // DescriptionLabel
-            // 
-            DescriptionLabel.AutoSize = true;
-            DescriptionLabel.Location = new Point(13, 273);
-            DescriptionLabel.Name = "DescriptionLabel";
-            DescriptionLabel.Size = new Size(88, 20);
-            DescriptionLabel.TabIndex = 9;
-            DescriptionLabel.Text = "Description:";
-            // 
-            // NameLabel
-            // 
-            NameLabel.AutoSize = true;
-            NameLabel.Location = new Point(13, 165);
-            NameLabel.Name = "NameLabel";
-            NameLabel.Size = new Size(52, 20);
-            NameLabel.TabIndex = 8;
-            NameLabel.Text = "Name:";
-            // 
-            // CostLabel
-            // 
-            CostLabel.AutoSize = true;
-            CostLabel.Location = new Point(13, 84);
-            CostLabel.Name = "CostLabel";
-            CostLabel.Size = new Size(41, 20);
-            CostLabel.TabIndex = 7;
-            CostLabel.Text = "Cost:";
-            // 
-            // IdLabel
-            // 
-            IdLabel.AutoSize = true;
-            IdLabel.Location = new Point(13, 51);
-            IdLabel.Name = "IdLabel";
-            IdLabel.Size = new Size(27, 20);
-            IdLabel.TabIndex = 6;
-            IdLabel.Text = "ID:";
-            // 
-            // ItemsLabel
-            // 
-            ItemsLabel.AutoSize = true;
-            ItemsLabel.Dock = DockStyle.Bottom;
-            ItemsLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            ItemsLabel.Location = new Point(3, 11);
-            ItemsLabel.Name = "ItemsLabel";
-            ItemsLabel.Size = new Size(152, 20);
-            ItemsLabel.TabIndex = 0;
-            ItemsLabel.Text = "Items";
-            // 
-            // ItemsTableLayoutPanel
-            // 
-            ItemsTableLayoutPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ItemsTableLayoutPanel.ColumnCount = 4;
-            ItemsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 19.43765F));
-            ItemsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.7139368F));
-            ItemsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10.02445F));
-            ItemsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 57.82396F));
-            ItemsTableLayoutPanel.Controls.Add(ItemDataGenerateButton, 2, 2);
-            ItemsTableLayoutPanel.Controls.Add(ItemsLabel, 0, 0);
-            ItemsTableLayoutPanel.Controls.Add(RemoveItemButton, 1, 2);
-            ItemsTableLayoutPanel.Controls.Add(AddItemButton, 0, 2);
-            ItemsTableLayoutPanel.Controls.Add(ItemsListBox, 0, 1);
-            ItemsTableLayoutPanel.Controls.Add(SelectedItemPanel, 3, 0);
-            ItemsTableLayoutPanel.Location = new Point(0, 0);
-            ItemsTableLayoutPanel.Name = "ItemsTableLayoutPanel";
-            ItemsTableLayoutPanel.RowCount = 3;
-            ItemsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 31F));
-            ItemsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            ItemsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
-            ItemsTableLayoutPanel.Size = new Size(818, 412);
-            ItemsTableLayoutPanel.TabIndex = 1;
-            // 
-            // ItemDataGenerateButton
-            // 
-            ItemDataGenerateButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ItemDataGenerateButton.Location = new Point(265, 367);
-            ItemDataGenerateButton.Name = "ItemDataGenerateButton";
-            ItemDataGenerateButton.Size = new Size(76, 42);
-            ItemDataGenerateButton.TabIndex = 2;
-            ItemDataGenerateButton.Text = "Gen";
-            ItemDataGenerateButton.UseVisualStyleBackColor = true;
-            ItemDataGenerateButton.Click += ItemDataGenerateButton_Click;
-            // 
-            // RemoveItemButton
-            // 
-            RemoveItemButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            RemoveItemButton.Location = new Point(161, 367);
-            RemoveItemButton.Name = "RemoveItemButton";
-            RemoveItemButton.Size = new Size(98, 42);
-            RemoveItemButton.TabIndex = 5;
-            RemoveItemButton.Text = "Remove";
-            RemoveItemButton.UseVisualStyleBackColor = true;
-            RemoveItemButton.Click += RemoveItemButton_Click;
-            // 
-            // AddItemButton
-            // 
-            AddItemButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AddItemButton.Location = new Point(3, 367);
-            AddItemButton.Name = "AddItemButton";
-            AddItemButton.Size = new Size(152, 42);
-            AddItemButton.TabIndex = 4;
-            AddItemButton.Text = "Add";
-            AddItemButton.UseVisualStyleBackColor = true;
-            AddItemButton.Click += AddItemButton_Click;
+            AddButton.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            AddButton.Location = new Point(6, 19);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(113, 45);
+            AddButton.TabIndex = 8;
+            AddButton.Text = "Add";
+            AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // ItemsListBox
             // 
             ItemsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ItemsTableLayoutPanel.SetColumnSpan(ItemsListBox, 3);
+            ItemsListBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ItemsListBox.FormattingEnabled = true;
-            ItemsListBox.Location = new Point(3, 34);
-            ItemsListBox.MinimumSize = new Size(0, 324);
+            ItemsListBox.ItemHeight = 17;
+            ItemsListBox.Location = new Point(6, 27);
             ItemsListBox.Name = "ItemsListBox";
-            ItemsListBox.Size = new Size(338, 324);
-            ItemsListBox.TabIndex = 4;
+            ItemsListBox.Size = new Size(319, 412);
+            ItemsListBox.TabIndex = 0;
             ItemsListBox.SelectedIndexChanged += ItemsListBox_SelectedIndexChanged;
+            ItemsListBox.DoubleClick += ItemsListBox_DoubleClick;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Controls.Add(CategoryComboBox);
+            groupBox2.Controls.Add(label5);
+            groupBox2.Controls.Add(DescriptionTextBox);
+            groupBox2.Controls.Add(label4);
+            groupBox2.Controls.Add(NameTextBox);
+            groupBox2.Controls.Add(CostTextBox);
+            groupBox2.Controls.Add(IDTextBox);
+            groupBox2.Controls.Add(label3);
+            groupBox2.Controls.Add(label2);
+            groupBox2.Controls.Add(label1);
+            groupBox2.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            groupBox2.Location = new Point(339, 3);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(359, 601);
+            groupBox2.TabIndex = 1;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Selected Item";
+            // 
+            // CategoryComboBox
+            // 
+            CategoryComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            CategoryComboBox.FormattingEnabled = true;
+            CategoryComboBox.Location = new Point(90, 116);
+            CategoryComboBox.Name = "CategoryComboBox";
+            CategoryComboBox.Size = new Size(150, 28);
+            CategoryComboBox.TabIndex = 9;
+            CategoryComboBox.SelectedIndexChanged += CategoryComboBox_SelectedIndexChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label5.Location = new Point(7, 121);
+            label5.Name = "label5";
+            label5.Size = new Size(71, 17);
+            label5.TabIndex = 8;
+            label5.Text = "Category:";
+            // 
+            // DescriptionTextBox
+            // 
+            DescriptionTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            DescriptionTextBox.Location = new Point(17, 323);
+            DescriptionTextBox.Multiline = true;
+            DescriptionTextBox.Name = "DescriptionTextBox";
+            DescriptionTextBox.Size = new Size(323, 215);
+            DescriptionTextBox.TabIndex = 7;
+            DescriptionTextBox.TextChanged += DescriptionTextBox_TextChanged_1;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label4.Location = new Point(6, 291);
+            label4.Name = "label4";
+            label4.Size = new Size(86, 17);
+            label4.TabIndex = 6;
+            label4.Text = "Description:";
+            // 
+            // NameTextBox
+            // 
+            NameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            NameTextBox.Location = new Point(17, 199);
+            NameTextBox.Multiline = true;
+            NameTextBox.Name = "NameTextBox";
+            NameTextBox.Size = new Size(323, 87);
+            NameTextBox.TabIndex = 5;
+            NameTextBox.TextChanged += NameTextBox_TextChanged_1;
+            // 
+            // CostTextBox
+            // 
+            CostTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            CostTextBox.Location = new Point(90, 72);
+            CostTextBox.Name = "CostTextBox";
+            CostTextBox.Size = new Size(150, 28);
+            CostTextBox.TabIndex = 4;
+            CostTextBox.TextChanged += CostTextBox_TextChanged_1;
+            // 
+            // IDTextBox
+            // 
+            IDTextBox.Enabled = false;
+            IDTextBox.Location = new Point(90, 37);
+            IDTextBox.Name = "IDTextBox";
+            IDTextBox.ReadOnly = true;
+            IDTextBox.Size = new Size(146, 28);
+            IDTextBox.TabIndex = 3;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label3.Location = new Point(6, 171);
+            label3.Name = "label3";
+            label3.Size = new Size(55, 17);
+            label3.TabIndex = 2;
+            label3.Text = "Name: ";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label2.Location = new Point(6, 79);
+            label2.Name = "label2";
+            label2.Size = new Size(47, 17);
+            label2.TabIndex = 1;
+            label2.Text = "Cost: ";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            label1.Location = new Point(6, 43);
+            label1.Name = "label1";
+            label1.Size = new Size(26, 17);
+            label1.TabIndex = 0;
+            label1.Text = "ID:";
             // 
             // ItemsTab
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            Controls.Add(ItemsTableLayoutPanel);
+            Controls.Add(groupBox2);
+            Controls.Add(ItemsGroupBox);
+            MinimumSize = new Size(702, 556);
             Name = "ItemsTab";
-            Size = new Size(818, 412);
-            SelectedItemPanel.ResumeLayout(false);
-            SelectedItemPanel.PerformLayout();
-            ItemsTableLayoutPanel.ResumeLayout(false);
-            ItemsTableLayoutPanel.PerformLayout();
+            Size = new Size(702, 605);
+            ItemsGroupBox.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-        private Panel SelectedItemPanel;
-        private Label SelectedItemLabel;
-        private Label DescriptionLabel;
-        private Label NameLabel;
-        private Label CostLabel;
-        private Label IdLabel;
-        private TextBox IdTextBox;
-        private RichTextBox DescriptionRichTextBox;
-        private RichTextBox NameRichTextBox;
+
+        private GroupBox ItemsGroupBox;
+        private GroupBox groupBox2;
+        private GroupBox groupBox1;
+        private ListBox ItemsListBox;
         private TextBox CostTextBox;
-        private TableLayoutPanel ItemsTableLayoutPanel;
-        private Label ItemsLabel;
-        private Button RemoveItemButton;
-        private Button AddItemButton;
-        private Button ItemDataGenerateButton;
+        private TextBox IDTextBox;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private Label label4;
+        private TextBox NameTextBox;
+        private Button RemoveButton;
+        private Button AddButton;
+        private TextBox DescriptionTextBox;
         private ComboBox CategoryComboBox;
-        private Label CategoryLabel;
-        public ListBox ItemsListBox;
+        private Label label5;
     }
 }
