@@ -30,7 +30,7 @@ namespace OOP2.View.Tabs
         /// </summary>
         private void InitializeComponent()
         {
-            Model.Address address1 = new Model.Address();
+            Model.Address address2 = new Model.Address();
             CustomersGroupBox = new GroupBox();
             CustomersListBox = new ListBox();
             SelectedCustomerGroupBox = new GroupBox();
@@ -42,6 +42,7 @@ namespace OOP2.View.Tabs
             ButtonsGroupBox = new GroupBox();
             RemoveButton = new Button();
             AddButton = new Button();
+            PriorityCheckBox = new CheckBox();
             CustomersGroupBox.SuspendLayout();
             SelectedCustomerGroupBox.SuspendLayout();
             ButtonsGroupBox.SuspendLayout();
@@ -78,6 +79,7 @@ namespace OOP2.View.Tabs
             // SelectedCustomerGroupBox
             // 
             SelectedCustomerGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            SelectedCustomerGroupBox.Controls.Add(PriorityCheckBox);
             SelectedCustomerGroupBox.Controls.Add(AddressControl);
             SelectedCustomerGroupBox.Controls.Add(FullNameTextBox);
             SelectedCustomerGroupBox.Controls.Add(IDTextBox);
@@ -96,17 +98,18 @@ namespace OOP2.View.Tabs
             // AddressControl
             // 
             AddressControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AddressControl.Location = new Point(5, 88);
+            AddressControl.Location = new Point(3, 164);
             AddressControl.Margin = new Padding(3, 2, 3, 2);
+            AddressControl.MinimumSize = new Size(390, 180);
             AddressControl.Name = "AddressControl";
-            address1.Apartment = "";
-            address1.Building = "";
-            address1.City = "";
-            address1.Country = "";
-            address1.Index = 100000;
-            address1.Street = "";
-            AddressControl.OurAddress = address1;
-            AddressControl.Size = new Size(457, 153);
+            address2.Apartment = "";
+            address2.Building = "";
+            address2.City = "";
+            address2.Country = "";
+            address2.Index = 100000;
+            address2.Street = "";
+            AddressControl.OurAddress = address2;
+            AddressControl.Size = new Size(457, 180);
             AddressControl.TabIndex = 5;
             // 
             // FullNameTextBox
@@ -185,6 +188,19 @@ namespace OOP2.View.Tabs
             AddButton.UseVisualStyleBackColor = true;
             AddButton.Click += AddButton_Click;
             // 
+            // PriorityCheckBox
+            // 
+            PriorityCheckBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PriorityCheckBox.AutoSize = true;
+            PriorityCheckBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            PriorityCheckBox.Location = new Point(89, 105);
+            PriorityCheckBox.Name = "PriorityCheckBox";
+            PriorityCheckBox.Size = new Size(97, 19);
+            PriorityCheckBox.TabIndex = 6;
+            PriorityCheckBox.Text = "Priority Order";
+            PriorityCheckBox.UseVisualStyleBackColor = true;
+            PriorityCheckBox.CheckedChanged += PriorityCheckBox_CheckedChanged;
+            // 
             // CustomerTab
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -216,5 +232,6 @@ namespace OOP2.View.Tabs
         private Button RemoveButton;
         private ListBox CustomersListBox;
         private Controls.AddressControl AddressControl;
+        private CheckBox PriorityCheckBox;
     }
 }

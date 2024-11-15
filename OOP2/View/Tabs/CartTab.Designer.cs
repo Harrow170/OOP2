@@ -61,7 +61,7 @@
             CustomerGroupBox.MinimumSize = new Size(349, 333);
             CustomerGroupBox.Name = "CustomerGroupBox";
             CustomerGroupBox.Padding = new Padding(3, 4, 3, 4);
-            CustomerGroupBox.Size = new Size(409, 566);
+            CustomerGroupBox.Size = new Size(349, 525);
             CustomerGroupBox.TabIndex = 12;
             CustomerGroupBox.TabStop = false;
             // 
@@ -73,12 +73,12 @@
             CustomerGroupBox2.Controls.Add(TotalCostLabel);
             CustomerGroupBox2.Controls.Add(ClearCartButton);
             CustomerGroupBox2.Controls.Add(RemoveItemButtton);
-            CustomerGroupBox2.Location = new Point(7, 369);
+            CustomerGroupBox2.Location = new Point(7, 328);
             CustomerGroupBox2.Margin = new Padding(3, 4, 3, 4);
             CustomerGroupBox2.MinimumSize = new Size(343, 140);
             CustomerGroupBox2.Name = "CustomerGroupBox2";
             CustomerGroupBox2.Padding = new Padding(3, 4, 3, 4);
-            CustomerGroupBox2.Size = new Size(397, 168);
+            CustomerGroupBox2.Size = new Size(343, 168);
             CustomerGroupBox2.TabIndex = 13;
             CustomerGroupBox2.TabStop = false;
             // 
@@ -99,7 +99,7 @@
             AmountLabel.AutoSize = true;
             AmountLabel.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             AmountLabel.ForeColor = SystemColors.ControlText;
-            AmountLabel.Location = new Point(313, 13);
+            AmountLabel.Location = new Point(259, 13);
             AmountLabel.Name = "AmountLabel";
             AmountLabel.Size = new Size(73, 20);
             AmountLabel.TabIndex = 6;
@@ -110,7 +110,7 @@
             TotalCostLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             TotalCostLabel.AutoSize = true;
             TotalCostLabel.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            TotalCostLabel.Location = new Point(313, 49);
+            TotalCostLabel.Location = new Point(259, 49);
             TotalCostLabel.Name = "TotalCostLabel";
             TotalCostLabel.Size = new Size(72, 28);
             TotalCostLabel.TabIndex = 7;
@@ -146,7 +146,7 @@
             CartListBox.Margin = new Padding(3, 4, 3, 4);
             CartListBox.MinimumSize = new Size(307, 224);
             CartListBox.Name = "CartListBox";
-            CartListBox.Size = new Size(348, 264);
+            CartListBox.Size = new Size(307, 224);
             CartListBox.TabIndex = 11;
             // 
             // CartLabel
@@ -174,7 +174,7 @@
             CustomerComboBox.Location = new Point(105, 21);
             CustomerComboBox.Margin = new Padding(3, 4, 3, 4);
             CustomerComboBox.Name = "CustomerComboBox";
-            CustomerComboBox.Size = new Size(259, 28);
+            CustomerComboBox.Size = new Size(199, 28);
             CustomerComboBox.TabIndex = 3;
             CustomerComboBox.SelectedIndexChanged += CustomerComboBox_SelectedIndexChanged;
             // 
@@ -188,7 +188,7 @@
             ItemsGroupBox.MinimumSize = new Size(229, 533);
             ItemsGroupBox.Name = "ItemsGroupBox";
             ItemsGroupBox.Padding = new Padding(3, 4, 3, 4);
-            ItemsGroupBox.Size = new Size(229, 574);
+            ItemsGroupBox.Size = new Size(229, 533);
             ItemsGroupBox.TabIndex = 0;
             ItemsGroupBox.TabStop = false;
             ItemsGroupBox.Text = "Items";
@@ -196,7 +196,7 @@
             // AddToCartButton
             // 
             AddToCartButton.Dock = DockStyle.Bottom;
-            AddToCartButton.Location = new Point(3, 530);
+            AddToCartButton.Location = new Point(3, 489);
             AddToCartButton.Margin = new Padding(3, 4, 3, 4);
             AddToCartButton.MinimumSize = new Size(91, 40);
             AddToCartButton.Name = "AddToCartButton";
@@ -213,7 +213,7 @@
             ItemsListBox.Location = new Point(3, 25);
             ItemsListBox.Margin = new Padding(3, 4, 3, 4);
             ItemsListBox.Name = "ItemsListBox";
-            ItemsListBox.Size = new Size(218, 464);
+            ItemsListBox.Size = new Size(218, 424);
             ItemsListBox.TabIndex = 11;
             // 
             // CartTab
@@ -225,7 +225,7 @@
             Margin = new Padding(3, 4, 3, 4);
             MinimumSize = new Size(635, 537);
             Name = "CartTab";
-            Size = new Size(728, 578);
+            Size = new Size(635, 537);
             CustomerGroupBox.ResumeLayout(false);
             CustomerGroupBox.PerformLayout();
             CustomerGroupBox2.ResumeLayout(false);

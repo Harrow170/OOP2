@@ -11,7 +11,7 @@ namespace OOP2
     public partial class MainForm : Form
     {
         /// <summary>
-        /// Ïåðåìåííàÿ òèïà Store.
+        /// .
         /// </summary>
         private Store _store = new Store();
         public MainForm()
@@ -24,6 +24,9 @@ namespace OOP2
             cartTab1.Customers = _store.Customers;
 
             ordersTab1.Customers = _store.Customers;
+
+            priorityOrderTab1.Customers = _store.Customers;
+            priorityOrderTab1.Items = _store.Items;
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -35,6 +38,9 @@ namespace OOP2
                     break;
                 case 3:
                     ordersTab1.RefreshData();
+                    break;
+                case 4:
+                    priorityOrderTab1.RefreshData();
                     break;
             }
         }

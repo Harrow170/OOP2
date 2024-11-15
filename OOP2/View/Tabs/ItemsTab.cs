@@ -13,10 +13,6 @@ using OOP2.Services;
 
 namespace OOP2.View.Tabs
 {
-    /// <summary>
-    /// Класс управления вкладкой товаров (ItemsTab).
-    /// Позволяет добавлять, удалять и редактировать товары в списке.
-    /// </summary>
     public partial class ItemsTab : UserControl
     {
         /// <summary>
@@ -207,7 +203,6 @@ namespace OOP2.View.Tabs
                     MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
         }
-
 
         private void ItemsListBox_DoubleClick(object sender, EventArgs e)
         {

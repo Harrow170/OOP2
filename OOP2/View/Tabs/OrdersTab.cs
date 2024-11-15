@@ -41,10 +41,25 @@ namespace OOP2.View.Tabs
         private Order _selectedOrder = new Order();
 
 
+
+
+
+        /// <summary>
+        /// Priority order.
+        /// </summary>
+        private PriorityOrder _priorityOrder;
+
+
+
+
+
+
+
         public OrdersTab()
         {
             InitializeComponent();
-
+            StatusComboBox.DataSource = Enum.GetValues(typeof(OrderStatus));
+            DeliveryTimeComboBox.DataSource = Enum.GetValues(typeof(OrderTime));
         }
 
         /// <summary>
@@ -55,23 +70,8 @@ namespace OOP2.View.Tabs
             OrdersDataGridView.Rows.Clear();
             _orders = new List<Order>();
             UpdateOrders();
-            //RefreshDataGrid();
-            LoadStatusComboBox();
+            //LoadStatusComboBox();
         }
-
-
-        //public void RefreshDataGrid()
-        //{
-        //    OrdersDataGridView.Rows.Clear();
-
-        //    foreach (Order order in _orders)
-        //    {
-        //        OrdersDataGridView.Rows.Add(order.Id, order.Date, order.Status, /*$"{order.Address.Country}, " +
-        //            $"{order.Address.City}, {order.Address.Street}, {order.Address.Building}," +
-        //            $"{order.Address.Apartment}"*/ );
-        //    }
-        //}
-
 
         /// <summary>
         /// Updates orders in DataGridView.
@@ -99,30 +99,25 @@ namespace OOP2.View.Tabs
         }
 
         /// <summary>
-        /// Adds elements of enum Orderstatus into StatusComboBox.
-        /// </summary>
-        private void LoadStatusComboBox()
-        {
-            StatusComboBox.Items.Clear();
-
-            foreach (var status in Enum.GetValues(typeof(OrderStatus)))
-            {
-                StatusComboBox.Items.Add(status);
-            }
-        }
-
-        /// <summary>
         /// Fills the list with orders.
         /// </summary>
         private void FillOrderItemsListBox()
         {
             OrderItemsListBox.Items.Clear();
-
             foreach (Item item in _orders[_selectedOrderIndex].Items)
             {
                 OrderItemsListBox.Items.Add(item.Name);
             }
         }
+
+
+
+        private List<string> ParseItemNames(List<Item> items)
+        {
+            var itemNames = items.Select(item => item.Name).ToList();
+            return itemNames;
+        }
+
 
         private void OrdersDataGridView_SelectionChanged(object sender, EventArgs e)
         {
@@ -139,9 +134,22 @@ namespace OOP2.View.Tabs
                 StatusComboBox.SelectedItem = _selectedOrder.Status;
                 TotalCostLabel.Text = _selectedOrder.Amount.ToString();
 
+
+                if (_selectedOrder is PriorityOrder priorityOrder)
+                {
+                    _priorityOrder = priorityOrder;
+                    DeliveryTimeComboBox.SelectedIndex = (int)priorityOrder.DeliveryTime;
+                    PriorityOptionsGroupBox.Visible = true;
+                }
+                else if (_selectedOrder is Order)
+                {
+                    _priorityOrder = null;
+                    PriorityOptionsGroupBox.Visible = false;
+                }
                 FillOrderItemsListBox();
             }
         }
+
 
         private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -150,7 +158,6 @@ namespace OOP2.View.Tabs
                 string ourStatus = StatusComboBox.Text;
                 OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
                 _selectedOrder.Status = orderStatus;
-                //RefreshDataGrid();
             }
             catch (Exception)
             {
@@ -162,6 +169,22 @@ namespace OOP2.View.Tabs
                     MessageBoxDefaultButton.Button1);
                 return;
             }
+        }
+
+        private void DeliveryTimeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_priorityOrder == null)
+            {
+                return;
+            }
+
+            if (DeliveryTimeComboBox.SelectedItem == null)
+            {
+                return;
+            }
+            _priorityOrder.DeliveryTime = (OrderTime)DeliveryTimeComboBox.SelectedItem;
+
+
         }
     }
 }
