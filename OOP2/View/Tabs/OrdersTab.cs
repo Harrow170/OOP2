@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OOP2.Model;
+using OOP2.Model.Enums;
+using OOP2.Model.Orders;
 using OOP2.Services;
 using OOP2.View.Controls;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -29,7 +31,6 @@ namespace OOP2.View.Tabs
         /// </summary>
         private int _selectedOrderIndex;
 
-
         /// <summary>
         /// Gets and sets a list of orders.
         /// </summary>
@@ -40,20 +41,10 @@ namespace OOP2.View.Tabs
         /// </summary>
         private Order _selectedOrder = new Order();
 
-
-
-
-
         /// <summary>
         /// Priority order.
         /// </summary>
         private PriorityOrder _priorityOrder;
-
-
-
-
-
-
 
         public OrdersTab()
         {
@@ -70,6 +61,8 @@ namespace OOP2.View.Tabs
             OrdersDataGridView.Rows.Clear();
             _orders = new List<Order>();
             UpdateOrders();
+            TotalCostLabel.Text = "0";
+            TotalAmountLabel.Text = "0";
             //LoadStatusComboBox();
         }
 
@@ -92,7 +85,7 @@ namespace OOP2.View.Tabs
                     _orders.Add(order);
                     OrdersDataGridView.Rows.Add(
                         order.Id, order.Date, order.Status,
-                        customer.Fullname, order.Amount
+                        customer.Fullname, order.Amount, order.Total
                         );
                 }
             }
@@ -110,8 +103,6 @@ namespace OOP2.View.Tabs
             }
         }
 
-
-
         private List<string> ParseItemNames(List<Item> items)
         {
             var itemNames = items.Select(item => item.Name).ToList();
@@ -123,7 +114,7 @@ namespace OOP2.View.Tabs
         {
             if (OrdersDataGridView.SelectedRows.Count != 0)
             {
-                _selectedOrderIndex = OrdersDataGridView.SelectedRows[0].Index;
+                _selectedOrderIndex = OrdersDataGridView.CurrentCell.RowIndex;
                 _selectedOrder = _orders[_selectedOrderIndex];
 
                 AddressControl.OurAddress = _orders[_selectedOrderIndex].Address;
@@ -133,12 +124,13 @@ namespace OOP2.View.Tabs
                 CreatedTextBox.Text = _selectedOrder.Date.ToString();
                 StatusComboBox.SelectedItem = _selectedOrder.Status;
                 TotalCostLabel.Text = _selectedOrder.Amount.ToString();
+                TotalAmountLabel.Text = _selectedOrder.Total.ToString();
 
 
                 if (_selectedOrder is PriorityOrder priorityOrder)
                 {
-                    _priorityOrder = priorityOrder;
-                    DeliveryTimeComboBox.SelectedIndex = (int)priorityOrder.DeliveryTime;
+                    _priorityOrder = (PriorityOrder)_orders[_selectedOrderIndex];
+                    DeliveryTimeComboBox.SelectedIndex = ((int)_priorityOrder.DeliveryTime - 1);
                     PriorityOptionsGroupBox.Visible = true;
                 }
                 else if (_selectedOrder is Order)
@@ -153,21 +145,11 @@ namespace OOP2.View.Tabs
 
         private void StatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
+            if (StatusComboBox.Text != null)
             {
                 string ourStatus = StatusComboBox.Text;
                 OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
                 _selectedOrder.Status = orderStatus;
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(
-                    "Incorrect status of the order.",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error,
-                    MessageBoxDefaultButton.Button1);
-                return;
             }
         }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OOP2.Model;
+using OOP2.Model.Enums;
 using OOP2.Services;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 

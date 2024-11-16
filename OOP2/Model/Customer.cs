@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using OOP2.Model.Discounts;
+using OOP2.Model.Orders;
 using OOP2.Services;
 
 namespace OOP2.Model
@@ -99,6 +101,16 @@ namespace OOP2.Model
         }
 
         /// <summary>
+        /// Gets and sets the priority of the order.
+        /// </summary>
+        public bool IsPriority { get; set; } = false;
+
+        /// <summary>
+        /// Gets and sets a list of discounts for a customer.
+        /// </summary>
+        public List<IDiscount> Discounts { get; set; }
+
+        /// <summary>
         /// Creates a sample of a class  <see cref="Item"/>.
         /// </summary>
         /// <param name="fullname">Full name of a customer.</param>
@@ -109,6 +121,8 @@ namespace OOP2.Model
             CustomerAddress = new Address();
             _id = IdGenerator.GetNextId();
             CustomerCart = new Cart();
+            Discounts = new List<IDiscount>();
+            Discounts.Add(new PointsDiscount());
         }
 
         /// <summary>
@@ -121,11 +135,9 @@ namespace OOP2.Model
             _id = IdGenerator.GetNextId();
             CustomerCart = new Cart();
             Orders = new List<Order>();
+            Discounts = new List<IDiscount>();
+            Discounts.Add(new PointsDiscount());
         }
 
-        /// <summary>
-        /// Gets and sets the priority of the order.
-        /// </summary>
-        public bool IsPriority { get; set; } = false;
     }
 }

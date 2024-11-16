@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using OOP2.Model.Enums;
 using OOP2.Services;
 
 namespace OOP2.Model

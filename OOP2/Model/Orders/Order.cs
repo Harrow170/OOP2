@@ -1,11 +1,12 @@
-﻿using OOP2.Services;
+﻿using OOP2.Model.Enums;
+using OOP2.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP2.Model
+namespace OOP2.Model.Orders
 {
     /// <summary>
     /// Holds data of a customers order.
@@ -85,12 +86,29 @@ namespace OOP2.Model
         }
 
         /// <summary>
+        /// Gets and sets a discount for items.
+        /// </summary>
+        public double DiscountAmount { get; set; }
+
+        /// <summary>
+        /// Returns the cost of the order with the discount.
+        /// </summary>
+        public double Total
+        {
+            get
+            {
+                return Amount - DiscountAmount;
+            }
+        }
+
+
+        /// <summary>
         /// Creates a sample of a class <see cref="Order"/>.
         /// </summary>
         /// <param name="status">Order's status.</param>
         /// <param name="address">Delivery address.</param>
         /// <param name="items">List of items.</param>
-        public Order(Address address, List<Item> items)
+        public Order(Address address, List<Item> items, double discountAmount)
         {
             _id = IdGenerator.GetNextId();
             Status = new OrderStatus();
@@ -100,6 +118,7 @@ namespace OOP2.Model
             {
                 Items.Add(item);
             }
+            DiscountAmount = discountAmount;
         }
 
         /// <summary>
@@ -111,6 +130,7 @@ namespace OOP2.Model
             _date = DateTime.Now;
             Status = new OrderStatus();
             Items = new List<Item>();
+            DiscountAmount = 0.0;
         }
 
     }

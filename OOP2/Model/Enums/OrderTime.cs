@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP2.Model
+namespace OOP2.Model.Enums
 {
     /// <summary>
     /// Holds data of time gaps.

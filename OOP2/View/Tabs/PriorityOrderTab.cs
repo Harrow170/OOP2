@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OOP2.Model;
+using OOP2.Model.Enums;
+using OOP2.Model.Orders;
 using OOP2.View.Controls;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -72,8 +74,12 @@ namespace OOP2.View.Tabs
                 {
                     foreach (Order order in customer.Orders)
                     {
-                        _priorityOrders.Add(new PriorityOrder(order.Address, order.Items,
-                           DateTime.Now, OrderTime.f9t11));
+                        if (order is PriorityOrder)
+                        {
+                            //    MessageBox.Show($"HELP ME {order.Amount}");
+                            _priorityOrders.Add(order as PriorityOrder);
+                        }
+
                     }
                 }
             }
@@ -86,20 +92,9 @@ namespace OOP2.View.Tabs
         private void RefreshDataGrid()
         {
             OrdersDataGridView.Rows.Clear();
-            foreach (var customer in Customers)
+            foreach (PriorityOrder order in _priorityOrders)
             {
-                var address = $"{customer.CustomerAddress.Country}, {customer.CustomerAddress.City}";
-                address += $"{customer.CustomerAddress.Street}, {customer.CustomerAddress.Building}";
-                address += $"{customer.CustomerAddress.Apartment}";
-
-                foreach (var order in customer.Orders)
-                {
-                    _orders.Add(order);
-                    OrdersDataGridView.Rows.Add(
-                        order.Id, order.Date, order.Status,
-                        customer.Fullname, order.Amount
-                        );
-                }
+                OrdersDataGridView.Rows.Add(order.Id, order.Date, order.Status, "aboba");
             }
         }
 
@@ -176,10 +171,20 @@ namespace OOP2.View.Tabs
 
         private void RemoveItemButtton_Click(object sender, EventArgs e)
         {
-            _selectedOrder.Items.RemoveAt(OrderItemsListBox.SelectedIndex);
-            FillOrderItemsListBox();
-            TotalCostLabel.Text = _selectedOrder.Amount.ToString();
+            if (OrderItemsListBox.SelectedIndex != -1)
+            {
+                _selectedOrder.Items.RemoveAt(OrderItemsListBox.SelectedIndex);
+                FillOrderItemsListBox();
+                TotalCostLabel.Text = _selectedOrder.Amount.ToString();
+            }
+            else
+            {
+                MessageBox.Show("ASHIBKA, TY DURAK");
+            }
         }
+
+        // and here i started loosing it
+
 
         private void ClearOrderButton_Click(object sender, EventArgs e)
         {
@@ -196,7 +201,7 @@ namespace OOP2.View.Tabs
             ClearTextBoxs();
         }
 
-        private void OrdersDataGridView_SelectionChanged(object sender, EventArgs e)
+        private void OrdersDataGridView_SelectionChanged_1(object sender, EventArgs e)
         {
             if (OrdersDataGridView.SelectedRows.Count != 0)
             {
@@ -204,7 +209,7 @@ namespace OOP2.View.Tabs
                 _selectedOrder = _priorityOrders[_selectedOrderIndex];
 
 
-                AddressControl.OurAddress = _orders[_selectedOrderIndex].Address;
+                AddressControl.OurAddress = _priorityOrders[_selectedOrderIndex].Address;
                 AddressControl.SelelctedTextBoxs();
 
                 IdTextBox.Text = _selectedOrder.Id.ToString();
