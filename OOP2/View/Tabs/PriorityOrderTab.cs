@@ -92,9 +92,20 @@ namespace OOP2.View.Tabs
         private void RefreshDataGrid()
         {
             OrdersDataGridView.Rows.Clear();
-            foreach (PriorityOrder order in _priorityOrders)
+            foreach (var customer in Customers)
             {
-                OrdersDataGridView.Rows.Add(order.Id, order.Date, order.Status, "aboba");
+                var address = $"{customer.CustomerAddress.Country}, {customer.CustomerAddress.City}";
+                address += $"{customer.CustomerAddress.Street}, {customer.CustomerAddress.Building}";
+                address += $"{customer.CustomerAddress.Apartment}";
+
+                foreach (var order in customer.Orders)
+                {
+                    _orders.Add(order);
+                    OrdersDataGridView.Rows.Add(
+                        order.Id, order.Date, order.Status,
+                        customer.Fullname, order.Amount, order.Total
+                        );
+                }
             }
         }
 
